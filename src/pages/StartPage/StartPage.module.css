@@ -1,0 +1,141 @@
+.root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: var(--space-4);
+}
+
+.content {
+    width: 100%;
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.header {
+    padding: var(--space-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    text-align: center;
+}
+
+.title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.1;
+}
+
+.description {
+    margin: var(--space-3) 0 0;
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.section {
+    padding: var(--space-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+
+.sectionTitle {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: var(--space-4);
+    color: var(--text);
+}
+
+.grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: var(--space-4);
+    background: var(--surface2);
+    transition: border-color 180ms ease;
+}
+
+.item:hover {
+    border-color: rgba(109, 94, 252, 0.2);
+}
+
+.label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: var(--space-2);
+}
+
+.value {
+    font-weight: 800;
+    font-size: 24px;
+    color: var(--text);
+    line-height: 1;
+}
+
+.actions {
+    padding: var(--space-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    display: flex;
+    gap: var(--space-3);
+}
+
+.actions button {
+    flex: 1;
+}
+
+@media (max-width: 640px) {
+    .root {
+        min-height: 50vh;
+        padding: var(--space-3);
+    }
+
+    .content {
+        gap: var(--space-4);
+    }
+
+    .header {
+        padding: var(--space-4);
+    }
+
+    .title {
+        font-size: 26px;
+    }
+
+    .description {
+        font-size: 14px;
+    }
+
+    .section {
+        padding: var(--space-4);
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .value {
+        font-size: 20px;
+    }
+
+    .actions {
+        padding: var(--space-4);
+        flex-direction: column;
+    }
+
+    .actions button {
+        width: 100%;
+    }
+}
