@@ -34,8 +34,8 @@
     display: grid;
     place-items: center;
     font-weight: 800;
-    color: var(--accent2);
-    border: 1px solid var(--accent2);
+    color: var(--accent);
+    border: 1px solid var(--accent);
     background: var(--surface2);
 }
 

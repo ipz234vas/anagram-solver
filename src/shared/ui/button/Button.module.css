@@ -1,0 +1,137 @@
+.btn {
+    appearance: none;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    transition: all 120ms ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.small {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+.medium {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.large {
+    padding: 12px 20px;
+    font-size: 15px;
+}
+
+.primary {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+}
+
+.primary:hover:not(:disabled) {
+    background: #5d4ee6;
+    border-color: #5d4ee6;
+}
+
+.primary:active:not(:disabled) {
+    background: #4d3ed6;
+}
+
+.secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.secondary:hover:not(:disabled) {
+    background: var(--surface2);
+}
+
+.secondary:active:not(:disabled) {
+    background: var(--surface);
+}
+
+.success {
+    background: var(--accent2);
+    color: var(--bg);
+    border-color: var(--accent2);
+}
+
+.success:hover:not(:disabled) {
+    background: #16a574;
+    border-color: #16a574;
+}
+
+.success:active:not(:disabled) {
+    background: #149164;
+}
+
+.danger {
+    background: var(--danger);
+    color: var(--bg);
+    border-color: var(--danger);
+}
+
+.danger:hover:not(:disabled) {
+    background: #d32f45;
+    border-color: #d32f45;
+}
+
+.danger:active:not(:disabled) {
+    background: #c02838;
+}
+
+.warning {
+    background: var(--warning);
+    color: var(--bg);
+    border-color: var(--warning);
+}
+
+.warning:hover:not(:disabled) {
+    background: #eda935;
+    border-color: #eda935;
+}
+
+.warning:active:not(:disabled) {
+    background: #e89d1f;
+}
+
+.ghost {
+    background: transparent;
+    color: var(--text);
+    border-color: transparent;
+}
+
+.ghost:hover:not(:disabled) {
+    background: var(--surface2);
+}
+
+.ghost:active:not(:disabled) {
+    background: var(--surface);
+}
+
+.link {
+    background: transparent;
+    color: var(--accent);
+    border-color: transparent;
+    padding: 4px 8px;
+}
+
+.link:hover:not(:disabled) {
+    text-decoration: underline;
+}
+
+.fullWidth {
+    width: 100%;
+}
