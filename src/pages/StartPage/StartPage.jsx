@@ -1,5 +1,7 @@
 import styles from "./StartPage.module.css";
-import { Button } from "../../shared/ui";
+import { Button } from "../../shared/ui/button/Button";
+import { Card } from "../../shared/ui/card/Card";
+import { StatItem } from "../../shared/ui/stat-item/StatItem";
 
 export function StartPage({ settings, onOpenSettings, onStart }) {
     const s = settings || { minWordLength: 4, maxWordLength: 6, timeSeconds: 60 };
@@ -7,32 +9,29 @@ export function StartPage({ settings, onOpenSettings, onStart }) {
     return (
         <div className={styles.root}>
             <div className={styles.content}>
-                <header className={styles.header}>
+                <Card as="header" className={styles.header}>
                     <h1 className={styles.title}>Анаграми</h1>
                     <p className={styles.description}>
                         Склади слово з перемішаних літер.
                     </p>
-                </header>
+                </Card>
 
-                <section className={styles.section} aria-label="Selected settings">
+                <Card as="section" aria-label="Selected settings">
                     <div className={styles.sectionTitle}>Поточні налаштування</div>
 
                     <div className={styles.grid}>
-                        <div className={styles.item}>
-                            <div className={styles.label}>Літер у слові</div>
-                            <div className={styles.value}>
-                                {s.minWordLength}–{s.maxWordLength}
-                            </div>
-                        </div>
-
-                        <div className={styles.item}>
-                            <div className={styles.label}>Час</div>
-                            <div className={styles.value}>{s.timeSeconds} сек</div>
-                        </div>
+                        <StatItem
+                            label="Літер у слові"
+                            value={`${s.minWordLength}–${s.maxWordLength}`}
+                        />
+                        <StatItem
+                            label="Час"
+                            value={`${s.timeSeconds} сек`}
+                        />
                     </div>
-                </section>
+                </Card>
 
-                <section className={styles.actions}>
+                <Card as="section" className={styles.actions}>
                     <Button
                         variant="secondary"
                         type="button"
@@ -50,7 +49,7 @@ export function StartPage({ settings, onOpenSettings, onStart }) {
                     >
                         Старт
                     </Button>
-                </section>
+                </Card>
             </div>
         </div>
     );
