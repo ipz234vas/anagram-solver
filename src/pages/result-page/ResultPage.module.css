@@ -1,0 +1,136 @@
+.root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: var(--space-4);
+}
+
+.content {
+    width: 100%;
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.header {
+    text-align: center;
+}
+
+.title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.1;
+}
+
+.description {
+    margin: var(--space-3) 0 0;
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.coefficientCard {
+    text-align: center;
+    background: var(--surface);
+    padding: var(--space-5) !important;
+    position: relative;
+}
+
+.recordBadgeWrapper {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.coefficientLabel {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-2);
+}
+
+.coefficientValue {
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+    margin: var(--space-3) 0;
+}
+
+.coefficientDescription {
+    margin: var(--space-3) 0 0;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.sectionTitle {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: var(--space-4);
+    color: var(--text);
+}
+
+.grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.actions {
+    display: flex;
+    gap: var(--space-3);
+}
+
+.actions button {
+    flex: 1;
+}
+
+@media (max-width: 640px) {
+    .root {
+        min-height: 50vh;
+        padding: var(--space-3);
+    }
+
+    .content {
+        gap: var(--space-4);
+    }
+
+    .title {
+        font-size: 26px;
+    }
+
+    .description {
+        font-size: 14px;
+    }
+
+    .coefficientValue {
+        font-size: 44px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .actions button {
+        width: 100%;
+    }
+
+    .recordBadgeWrapper {
+        top: var(--space-2);
+        right: var(--space-3);
+    }
+}
