@@ -1,5 +1,5 @@
 import styles from './LetterSlot.module.css';
-import {cn} from "../../../../shared/lib/cn.js";
+import {cn} from "@shared/lib/cn.js";
 
 export function LetterSlot({letter, index, isSelected, onClick}) {
     const handleClick = () => {

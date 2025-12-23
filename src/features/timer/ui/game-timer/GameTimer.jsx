@@ -1,14 +1,14 @@
-import { forwardRef } from 'react';
-import { Timer} from "../../../../shared/ui";
+import {forwardRef} from 'react';
+import {Timer} from "@shared/ui/index.js";
 
-export const GameTimer = forwardRef(({ warningAt, dangerAt, duration, onTimeOver }, ref) => {
+export const GameTimer = forwardRef(({warningAt, dangerAt, duration, onTimeOver}, ref) => {
     const timeLeft = 50;
 
     const getTimerState = () => {
         if (timeLeft <= dangerAt)
-            return { danger: true };
+            return {danger: true};
         if (timeLeft <= warningAt)
-            return { warning: true };
+            return {warning: true};
         return {};
     };
 

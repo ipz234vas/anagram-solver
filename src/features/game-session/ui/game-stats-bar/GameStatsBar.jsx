@@ -1,5 +1,5 @@
 import styles from './GameStatsBar.module.css';
-import { Card } from "../../../../shared/ui";
+import { Card } from "@shared/ui/index.js";
 
 export function GameStatsBar({ score, wordsCompleted, wordsSkipped, timerSlot }) {
 

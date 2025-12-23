@@ -1,5 +1,5 @@
 import styles from './LetterTiles.module.css';
-import {cn} from "../../../../shared/lib/cn.js";
+import {cn} from "@shared/lib/cn.js";
 
 export function LetterTiles({ letters, disabledIndices = [], onLetterClick }) {
 

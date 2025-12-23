@@ -1,5 +1,5 @@
 import styles from './Card.module.css';
-import {cn} from "../../lib/cn.js";
+import {cn} from "@shared/lib/cn.js";
 
 export function Card({children, className = '', as = 'div', ...rest}) {
     const Component = as;

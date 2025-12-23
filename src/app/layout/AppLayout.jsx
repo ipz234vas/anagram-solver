@@ -1,4 +1,4 @@
-import styles from "./AppLayout.module.css";
+import styles from "@app/layout/AppLayout.module.css";
 
 export function AppLayout({ title, subtitle, children }) {
     return (

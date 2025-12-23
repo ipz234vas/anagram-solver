@@ -1,5 +1,5 @@
 import styles from './Button.module.css';
-import {cn} from "../../lib/cn.js";
+import {cn} from "@shared/lib/cn.js";
 
 export function Button({
                            children,

@@ -1,10 +1,10 @@
 import styles from './GamePage.module.css';
-import {GameStatsBar} from "../../features/game-session";
-import {GameActions} from "../../features/game-controls";
-import {WordInputField} from "../../features/word-input";
-import {LetterTiles} from "../../features/letter-selection";
-import {GameTimer} from "../../features/timer";
-import {Button} from "../../shared/ui/index.js";
+import {GameStatsBar} from "@features/game-session";
+import {GameActions} from "@features/game-controls";
+import {WordInputField} from "@features/word-input";
+import {LetterTiles} from "@features/letter-selection";
+import {GameTimer} from "@features/timer";
+import {Button} from "@shared/ui";
 
 export function GamePage({onGameEnd}) {
     const mockScore = 32;

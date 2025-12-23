@@ -1,5 +1,5 @@
 import styles from './CursorSlot.module.css';
-import {cn} from "../../../../shared/lib/cn.js";
+import {cn} from "@shared/lib/cn.js";
 
 export function CursorSlot({index, isActive, onClick}) {
     const handleClick = () => {

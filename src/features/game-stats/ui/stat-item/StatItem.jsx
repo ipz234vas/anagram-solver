@@ -1,5 +1,5 @@
 import styles from './StatItem.module.css';
-import {cn} from "../../../../shared/lib/cn.js";
+import {cn} from "@shared/lib/cn.js";
 
 export function StatItem({ label, value, className = '' }) {
     return (

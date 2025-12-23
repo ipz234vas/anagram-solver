@@ -1,5 +1,5 @@
 import styles from './Timer.module.css';
-import {cn} from "../../lib/cn.js";
+import {cn} from "@shared/lib/cn.js";
 
 export function Timer({
                           seconds,

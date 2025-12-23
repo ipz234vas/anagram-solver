@@ -1,1 +1,1 @@
-export {GameActions} from "./ui/game-actions/GameActions.jsx";
+export {GameActions} from "./ui/game-actions/GameActions";
