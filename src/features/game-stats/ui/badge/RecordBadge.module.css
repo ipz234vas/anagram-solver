@@ -1,0 +1,44 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--warning);
+    color: #1f2937;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px var(--warning);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.icon {
+    flex-shrink: 0;
+}
+
+.text {
+    display: inline;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.85;
+    }
+}
+
+@media (max-width: 640px) {
+    .badge {
+        font-size: 12px;
+        padding: var(--space-2) var(--space-2);
+    }
+
+    .icon {
+        width: 14px;
+        height: 14px;
+    }
+}

@@ -1,0 +1,44 @@
+.root {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: center;
+    align-items: center;
+}
+
+.iconBtn {
+    appearance: none;
+    width: 56px;
+    height: 56px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 180ms ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconBtn:hover {
+    background: var(--surface2);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.iconBtn:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+    .iconBtn {
+        width: 48px;
+        height: 48px;
+    }
+
+    .iconBtn svg {
+        width: 22px;
+        height: 22px;
+    }
+}
