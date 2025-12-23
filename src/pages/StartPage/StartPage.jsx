@@ -1,7 +1,7 @@
 import styles from "./StartPage.module.css";
-import { Button } from "../../shared/ui/button/Button";
-import { Card } from "../../shared/ui/card/Card";
-import { StatItem } from "../../shared/ui/stat-item/StatItem";
+import { Button } from "../../shared/ui";
+import { Card } from "../../shared/ui";
+import { StatItem } from "../../shared/ui";
 
 export function StartPage({ settings, onOpenSettings, onStart }) {
     const s = settings || { minWordLength: 4, maxWordLength: 6, timeSeconds: 60 };
