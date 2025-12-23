@@ -4,6 +4,7 @@ import {GameActions} from "../../features/game-controls/ui";
 import {WordInputField} from "../../features/word-input/ui";
 import {LetterTiles} from "../../features/letter-selection/ui";
 import {GameTimer} from "../../features/timer/ui";
+import {Button} from "../../shared/ui/index.js";
 
 export function GamePage() {
     const mockScore = 32;
@@ -36,6 +37,17 @@ export function GamePage() {
     const handleShuffle = () => {
         console.log('Shuffle requested');
     };
+
+    const handleSkipWord = () => {
+        console.log('Word skipped');
+    };
+
+    const handleEndGame = () => {
+        const confirmEnd = window.confirm("Ви дійсно хочете завершити гру?");
+        if (confirmEnd) {
+            console.log('Game ended by user');
+        }
+    }
 
     return (
         <div className={styles.root}>
@@ -75,6 +87,24 @@ export function GamePage() {
                         disabledIndices={mockDisabledIndices}
                         onLetterClick={handleLetterClick}
                     />
+                </div>
+
+                <div className={styles.footer}>
+                    <Button
+                        variant="secondary"
+                        onClick={handleSkipWord}
+                        size={'large'}
+                    >
+                        Пропустити слово
+                    </Button>
+
+                    <Button
+                        variant="danger"
+                        onClick={handleEndGame}
+                        size={'large'}
+                    >
+                        Завершити гру
+                    </Button>
                 </div>
             </div>
         </div>

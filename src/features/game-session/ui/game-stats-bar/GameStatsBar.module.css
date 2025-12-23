@@ -8,6 +8,7 @@
 .stat {
     padding: var(--space-4) !important;
     text-align: center;
+    align-content: center;
 }
 
 .value {
