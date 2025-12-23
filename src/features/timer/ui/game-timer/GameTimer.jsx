@@ -23,7 +23,7 @@ export const GameTimer = forwardRef(({ duration = 60, onTimeOver, warningAt, dan
         <Timer
             seconds={timeLeft}
             size="large"
-            {...timerState}
+            {...timerState()}
         />
     );
 });

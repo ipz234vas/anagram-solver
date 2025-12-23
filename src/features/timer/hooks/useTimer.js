@@ -2,26 +2,38 @@ import { useState, useEffect, useRef } from 'react';
 
 export function useTimer({ duration, onTimeOver, autoStart = false }) {
     const [timeLeft, setTimeLeft] = useState(duration);
-    const [isPaused, setIsPaused] = useState(!autoStart);
+    const [isRunning, setIsRunning] = useState(autoStart);
 
     const intervalRef = useRef(null);
     const onTimeOverRef = useRef(onTimeOver);
+    const timeLeftRef = useRef(timeLeft);
 
     useEffect(() => {
         onTimeOverRef.current = onTimeOver;
     }, [onTimeOver]);
 
     useEffect(() => {
-        if (isPaused || timeLeft <= 0) {
+        timeLeftRef.current = timeLeft;
+    }, [timeLeft]);
+
+    useEffect(() => {
+        if (!isRunning) {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+                intervalRef.current = null;
+            }
+            return;
+        }
+
+        if (timeLeft <= 0) {
             return;
         }
 
         intervalRef.current = setInterval(() => {
             setTimeLeft(prev => {
                 if (prev <= 1) {
-                    if (onTimeOverRef.current) {
-                        onTimeOverRef.current();
-                    }
+                    setIsRunning(false);
+                    onTimeOverRef.current?.();
                     return 0;
                 }
                 return prev - 1;
@@ -31,41 +43,39 @@ export function useTimer({ duration, onTimeOver, autoStart = false }) {
         return () => {
             if (intervalRef.current) {
                 clearInterval(intervalRef.current);
+                intervalRef.current = null;
             }
         };
-    }, [isPaused, timeLeft]);
+    }, [isRunning, timeLeft]);
 
     const start = () => {
         setTimeLeft(duration);
-        setIsPaused(false);
+        setIsRunning(true);
     };
 
     const pause = () => {
-        setIsPaused(true);
+        setIsRunning(false);
     };
 
     const resume = () => {
-        setIsPaused(false);
+        if (timeLeftRef.current > 0) {
+            setIsRunning(true);
+        }
     };
 
     const reset = () => {
+        setIsRunning(false);
         setTimeLeft(duration);
-        setIsPaused(true);
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-        }
     };
 
     const stop = () => {
-        setIsPaused(true);
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-        }
+        setIsRunning(false);
+        setTimeLeft(0);
     };
 
     return {
         timeLeft,
-        isPaused,
+        isRunning,
         start,
         pause,
         resume,

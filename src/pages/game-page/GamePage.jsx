@@ -53,7 +53,7 @@ export function GamePage({onGameEnd}) {
     };
 
     const handleEndGame = () => {
-        const confirmEnd = window.confirm("Ви дійсно хочете завершити гру? Залишилось " + timerRef.current.getTime() + "секунд");
+        const confirmEnd = window.confirm("Ви дійсно хочете завершити гру? Залишилось " + timerRef.current.timeLeft + "секунд");
         if (confirmEnd) {
             onGameEnd();
         }
