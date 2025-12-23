@@ -1,8 +1,6 @@
 import styles from "./ResultPage.module.css";
-import { Button } from "../../shared/ui";
-import { Card } from "../../shared/ui";
-import { StatItem } from "../../shared/ui";
-import { RecordBadge } from "../../shared/ui";
+import { Button, Card } from "../../shared/ui";
+import { StatItem, RecordBadge } from "../../features/game-stats";
 
 export function ResultPage({ gameResult, isNewRecord, onPlayAgain, onGoHome }) {
     // gameResult = { timeSeconds, score, wordsGuessed, wordsSkipped, coefficient }
