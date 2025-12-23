@@ -6,7 +6,7 @@ import {LetterTiles} from "../../features/letter-selection";
 import {GameTimer} from "../../features/timer";
 import {Button} from "../../shared/ui/index.js";
 
-export function GamePage() {
+export function GamePage({onGameEnd}) {
     const mockScore = 32;
     const mockWordsCompleted = 3;
     const mockWordsSkipped = 2;
@@ -45,7 +45,7 @@ export function GamePage() {
     const handleEndGame = () => {
         const confirmEnd = window.confirm("Ви дійсно хочете завершити гру?");
         if (confirmEnd) {
-            console.log('Game ended by user');
+            onGameEnd();
         }
     }
 

@@ -1,4 +1,3 @@
-
 import styles from "./RecordBadge.module.css";
 import { Trophy } from "lucide-react";
 
