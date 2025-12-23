@@ -5,8 +5,10 @@ import {WordInputField} from "@features/word-input";
 import {LetterTiles} from "@features/letter-selection";
 import {GameTimer} from "@features/timer";
 import {Button} from "@shared/ui";
+import {useCallback, useEffect, useRef} from "react";
 
 export function GamePage({onGameEnd}) {
+    const timerRef = useRef(null);
     const mockScore = 32;
     const mockWordsCompleted = 3;
     const mockWordsSkipped = 2;
@@ -17,6 +19,14 @@ export function GamePage({onGameEnd}) {
     const mockSelectedSlot = 4;
     const mockSelectedCursor = null;
     const mockDisabledIndices = [0, 3];
+
+    useEffect(() => {
+        timerRef.current.start();
+    }, []);
+
+    const handleTimeOver = useCallback(() => {
+        console.log("Час вийшов! Гру закінчено.");
+    }, []);
 
     const handleSlotClick = (index) => {
         console.log('Slot clicked:', index);
@@ -43,7 +53,7 @@ export function GamePage({onGameEnd}) {
     };
 
     const handleEndGame = () => {
-        const confirmEnd = window.confirm("Ви дійсно хочете завершити гру?");
+        const confirmEnd = window.confirm("Ви дійсно хочете завершити гру? Залишилось " + timerRef.current.getTime() + "секунд");
         if (confirmEnd) {
             onGameEnd();
         }
@@ -56,11 +66,11 @@ export function GamePage({onGameEnd}) {
                 wordsCompleted={mockWordsCompleted}
                 wordsSkipped={mockWordsSkipped}
                 timerSlot={<GameTimer
-                    ref={null}
-                    duration={60}
+                    ref={timerRef}
+                    duration={120}
                     warningAt={30}
                     dangerAt={10}
-                    onTimeOver={() => alert('Game Over')}
+                    onTimeOver={handleTimeOver}
                 />}
             />
 
