@@ -1,0 +1,51 @@
+.cursor {
+    appearance: none;
+    width: 8px;
+    height: 80px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 180ms ease;
+    position: relative;
+}
+
+.indicator {
+    width: 3px;
+    height: 60%;
+    background: var(--border);
+    border-radius: 2px;
+    transition: all 180ms ease;
+}
+
+.cursor:hover .indicator {
+    width: 4px;
+    height: 70%;
+    background: var(--accent);
+}
+
+.active .indicator {
+    width: 4px;
+    height: 80%;
+    background: var(--accent);
+    animation: pulse-cursor 1s ease-in-out infinite;
+}
+
+@keyframes pulse-cursor {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+@media (max-width: 640px) {
+    .cursor {
+        width: 6px;
+        height: 60px;
+    }
+}
