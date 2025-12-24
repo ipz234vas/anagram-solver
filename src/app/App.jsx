@@ -11,12 +11,19 @@ function App() {
     const goToGame = () => setPage("game");
     const goToResults = () => setPage("results");
 
+    const settings = {
+        minWordLength: 4,
+        maxWordLength: 6,
+        timeSeconds: 60,
+        category: 'Їжа'
+    };
+
     const renderPage = () => {
         switch (page) {
             case "start":
-                return <StartPage onStart={goToGame}/>;
+                return <StartPage settings={settings} onStart={goToGame}/>;
             case "game":
-                return <GamePage onGameEnd={goToResults}/>;
+                return <GamePage settings={settings} onGameEnd={goToResults}/>;
             case "results":
                 return <ResultPage onGoHome={goToStart} onPlayAgain={goToGame}/>;
             default:

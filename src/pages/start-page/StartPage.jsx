@@ -4,7 +4,6 @@ import { Card } from "@shared/ui";
 import { StatItem } from "@features/game-stats";
 
 export function StartPage({ settings, onOpenSettings, onStart }) {
-    const s = settings || { minWordLength: 4, maxWordLength: 6, timeSeconds: 60 };
 
     return (
         <div className={styles.root}>
@@ -22,11 +21,15 @@ export function StartPage({ settings, onOpenSettings, onStart }) {
                     <div className={styles.grid}>
                         <StatItem
                             label="Літер у слові"
-                            value={`${s.minWordLength}–${s.maxWordLength}`}
+                            value={`${settings.minWordLength}–${settings.maxWordLength}`}
                         />
                         <StatItem
                             label="Час"
-                            value={`${s.timeSeconds} сек`}
+                            value={`${settings.timeSeconds} сек`}
+                        />
+                        <StatItem
+                            label="Категорія"
+                            value={settings.category}
                         />
                     </div>
                 </Card>

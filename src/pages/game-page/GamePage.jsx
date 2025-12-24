@@ -18,10 +18,14 @@ import {
 
 import {checkWordCompletion} from "@shared/utils";
 
-export function GamePage({onGameEnd, gameFilters = {}}) {
+export function GamePage({onGameEnd, settings}) {
     const timerRef = useRef(null);
     const timerStartedRef = useRef(false);
-
+    const gameFilters = {
+        categories: [settings.category],
+        minLength: [settings.minWordLength],
+        maxLength: [settings.maxWordLength],
+    }
     const {filteredWords, isLoading, error} = useWords(gameFilters);
 
     const {
@@ -161,7 +165,7 @@ export function GamePage({onGameEnd, gameFilters = {}}) {
                 timerSlot={
                     <GameTimer
                         ref={timerRef}
-                        duration={120}
+                        duration={settings.timeSeconds}
                         warningAt={30}
                         dangerAt={10}
                         onTimeOver={handleTimeOver}
