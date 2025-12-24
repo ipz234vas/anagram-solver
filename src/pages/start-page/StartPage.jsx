@@ -1,9 +1,18 @@
+import { useState } from "react";
 import styles from "./StartPage.module.css";
-import { Button } from "@shared/ui";
-import { Card } from "@shared/ui";
+import { Button, Card } from "@shared/ui";
 import { StatItem } from "@features/game-stats";
+import { SettingsModal, useGameSettings } from "@features/game-settings";
 
-export function StartPage({ settings, onOpenSettings, onStart }) {
+export function StartPage({ onStart }) {
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const { settings, updateSettings, isValid } = useGameSettings();
+
+    const handleStart = () => {
+        if (isValid()) {
+            onStart(settings);
+        }
+    };
 
     return (
         <div className={styles.root}>
@@ -21,15 +30,23 @@ export function StartPage({ settings, onOpenSettings, onStart }) {
                     <div className={styles.grid}>
                         <StatItem
                             label="Літер у слові"
-                            value={`${settings.minWordLength}–${settings.maxWordLength}`}
+                            value={
+                                settings.minWordLength && settings.maxWordLength
+                                    ? `${settings.minWordLength}–${settings.maxWordLength}`
+                                    : "Не вибрано"
+                            }
                         />
                         <StatItem
                             label="Час"
-                            value={`${settings.timeSeconds} сек`}
+                            value={
+                                settings.timeSeconds
+                                    ? `${settings.timeSeconds} сек`
+                                    : "Не вибрано"
+                            }
                         />
                         <StatItem
                             label="Категорія"
-                            value={settings.category}
+                            value={settings.category || "Не вибрано"}
                         />
                     </div>
                 </Card>
@@ -39,7 +56,7 @@ export function StartPage({ settings, onOpenSettings, onStart }) {
                         variant="secondary"
                         type="button"
                         size="large"
-                        onClick={onOpenSettings}
+                        onClick={() => setIsSettingsOpen(true)}
                     >
                         Налаштувати
                     </Button>
@@ -48,12 +65,20 @@ export function StartPage({ settings, onOpenSettings, onStart }) {
                         variant="primary"
                         type="button"
                         size="large"
-                        onClick={onStart}
+                        onClick={handleStart}
+                        disabled={!isValid()}
                     >
                         Старт
                     </Button>
                 </Card>
             </div>
+
+            <SettingsModal
+                isOpen={isSettingsOpen}
+                onClose={() => setIsSettingsOpen(false)}
+                settings={settings}
+                onSave={updateSettings}
+            />
         </div>
     );
 }
