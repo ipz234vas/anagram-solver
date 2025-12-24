@@ -57,13 +57,25 @@ export function GamePage({onGameEnd, settings}) {
         applyHintAtIndex
     );
 
+    const handleGameEnd = useCallback(() => {
+        const totalSeconds = settings.timeSeconds - timerRef.current.timeLeft;
+        const result = {
+            timeSeconds: totalSeconds,
+            score: score,
+            wordsGuessed: wordsCompleted,
+            wordsSkipped: wordsSkipped,
+            coefficient: (totalSeconds / settings.timeSeconds * 100).toFixed(2),
+        };
+        onGameEnd(result);
+    }, [onGameEnd, settings.timeSeconds, score, wordsCompleted, wordsSkipped]);
+
     const {handleShuffle, handleSkipWord, handleEndGame, skipPenalty} = useGameControls(
         roundState,
         updateRoundState,
         startNewRound,
         subtractScore,
         incrementWordsSkipped,
-        onGameEnd,
+        handleGameEnd,
         timerRef
     );
 
@@ -95,8 +107,8 @@ export function GamePage({onGameEnd, settings}) {
     }, [roundState?.currentWord, roundState?.targetWord, roundState?.currentWordScore, addScore, incrementWordsCompleted, startNewRound]);
 
     const handleTimeOver = useCallback(() => {
-        onGameEnd();
-    }, [onGameEnd]);
+        handleGameEnd();
+    }, [handleGameEnd]);
 
     const handleLetterTileClick = useCallback((index) => {
         if (roundState?.availableLetters?.[index]) {
