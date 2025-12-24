@@ -30,6 +30,54 @@
     box-shadow: 0 0 0 3px rgba(109, 94, 252, 0.15);
 }
 
+.hint {
+    border-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
+    animation: pulse-hint 0.5s ease-in-out;
+}
+
+.error {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    animation: shake 0.3s ease-in-out;
+}
+
+.correct {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    animation: bounce 0.4s ease-in-out;
+}
+
+@keyframes pulse-hint {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-4px);
+    }
+    75% {
+        transform: translateX(4px);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
 @media (max-width: 640px) {
     .slot {
         width: 48px;
