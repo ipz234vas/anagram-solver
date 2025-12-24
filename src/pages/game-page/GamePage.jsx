@@ -1,12 +1,13 @@
 import styles from './GamePage.module.css';
-import {GameStatsBar} from "@features/game-session";
-import {GameActions} from "@features/game-controls";
-import {WordInputField} from "@features/word-input";
-import {LetterTiles} from "@features/letter-selection";
-import {GameTimer} from "@features/timer";
-import {Button} from "@shared/ui";
-import {useCallback, useEffect, useRef} from "react";
-import {useWords} from "@features/words";
+import { GameStatsBar } from "@features/game-session";
+import { GameActions } from "@features/game-controls";
+import { WordInputField } from "@features/word-input";
+import { LetterTiles } from "@features/letter-selection";
+import { GameTimer } from "@features/timer";
+import { Button, Modal } from "@shared/ui";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useWords } from "@features/words";
+import { ResultPage } from "@pages/result-page/ResultPage.jsx";
 
 import {
     useGameRound,
@@ -16,17 +17,24 @@ import {
     useGameControls
 } from "@features/game-flow";
 
-import {checkWordCompletion} from "@shared/utils";
+import { checkWordCompletion } from "@shared/utils";
+import { useGameSettings } from "@features/game-settings/index.js";
 
-export function GamePage({onGameEnd, settings}) {
+export function GamePage({ onGameEnd, onGoHome }) {
+    const { settings } = useGameSettings();
+    const [showResults, setShowResults] = useState(false);
+    const [gameResult, setGameResult] = useState(null);
+
     const timerRef = useRef(null);
     const timerStartedRef = useRef(false);
+
     const gameFilters = {
         categories: [settings.category],
         minLength: [settings.minWordLength],
         maxLength: [settings.maxWordLength],
-    }
-    const {filteredWords, isLoading, error} = useWords(gameFilters);
+    };
+
+    const { filteredWords, isLoading, error } = useWords(gameFilters);
 
     const {
         score,
@@ -44,32 +52,39 @@ export function GamePage({onGameEnd, settings}) {
         updateRoundState
     } = useGameRound(filteredWords);
 
-    const {toggleHintMode, applyHintAtIndex, canUseHint, hintPenalty} = useHintLogic(
+    const { toggleHintMode, applyHintAtIndex, canUseHint, hintPenalty } = useHintLogic(
         roundState,
         updateRoundState,
         score,
         subtractScore
     );
 
-    const {handleSlotClick, handleCursorClick, handleLetterClick} = useWordInput(
+    const { handleSlotClick, handleCursorClick, handleLetterClick } = useWordInput(
         roundState,
         updateRoundState,
         applyHintAtIndex
     );
 
     const handleGameEnd = useCallback(() => {
-        const totalSeconds = settings.timeSeconds - timerRef.current.timeLeft;
+        const totalTime = settings.timeSeconds ?? 60;
+        const timeLeft = timerRef.current?.timeLeft ?? 0;
+        const elapsedSeconds = Math.max(0, totalTime - timeLeft);
+
         const result = {
-            timeSeconds: totalSeconds,
+            timeSeconds: elapsedSeconds,
             score: score,
             wordsGuessed: wordsCompleted,
             wordsSkipped: wordsSkipped,
-            coefficient: (totalSeconds / settings.timeSeconds * 100).toFixed(2),
+            coefficient: elapsedSeconds > 0
+                ? Number(((score / elapsedSeconds) * 60).toFixed(2))
+                : 0,
         };
-        onGameEnd(result);
-    }, [onGameEnd, settings.timeSeconds, score, wordsCompleted, wordsSkipped]);
 
-    const {handleShuffle, handleSkipWord, handleEndGame, skipPenalty} = useGameControls(
+        setGameResult(result);
+        setShowResults(true);
+    }, [settings.timeSeconds, score, wordsCompleted, wordsSkipped]);
+
+    const { handleShuffle, handleSkipWord, handleEndGame, skipPenalty } = useGameControls(
         roundState,
         updateRoundState,
         startNewRound,
@@ -92,7 +107,10 @@ export function GamePage({onGameEnd, settings}) {
     useEffect(() => {
         if (!roundState) return;
 
-        const {isComplete, isCorrect} = checkWordCompletion(roundState.currentWord, roundState.targetWord);
+        const { isComplete, isCorrect } = checkWordCompletion(
+            roundState.currentWord,
+            roundState.targetWord
+        );
 
         if (isComplete && isCorrect) {
             const wordScore = roundState.currentWordScore;
@@ -104,7 +122,14 @@ export function GamePage({onGameEnd, settings}) {
                 startNewRound();
             }, 500);
         }
-    }, [roundState?.currentWord, roundState?.targetWord, roundState?.currentWordScore, addScore, incrementWordsCompleted, startNewRound]);
+    }, [
+        roundState?.currentWord,
+        roundState?.targetWord,
+        roundState?.currentWordScore,
+        addScore,
+        incrementWordsCompleted,
+        startNewRound
+    ]);
 
     const handleTimeOver = useCallback(() => {
         handleGameEnd();
@@ -115,6 +140,16 @@ export function GamePage({onGameEnd, settings}) {
             handleLetterClick(roundState.availableLetters[index]);
         }
     }, [roundState, handleLetterClick]);
+
+    const handlePlayAgain = useCallback(() => {
+        setShowResults(false);
+        setGameResult(null);
+        onGameEnd?.();
+    }, [onGameEnd]);
+
+    const handleGoHome = useCallback(() => {
+        onGoHome?.();
+    }, [onGoHome]);
 
     if (isLoading) {
         return (
@@ -149,7 +184,7 @@ export function GamePage({onGameEnd, settings}) {
         );
     }
 
-    const {isWrong: isInvalid} = checkWordCompletion(
+    const { isWrong: isInvalid } = checkWordCompletion(
         roundState.currentWord,
         roundState.targetWord
     );
@@ -238,6 +273,22 @@ export function GamePage({onGameEnd, settings}) {
                     </Button>
                 </div>
             </div>
+
+            <Modal
+                isOpen={showResults}
+                onClose={handleGoHome}
+                title="Результати гри"
+                hasBackdropBlur={true}
+                showCloseButton={false}
+            >
+                {gameResult && (
+                    <ResultPage
+                        gameResult={gameResult}
+                        onGoHome={handleGoHome}
+                        onPlayAgain={handlePlayAgain}
+                    />
+                )}
+            </Modal>
         </div>
     );
 }

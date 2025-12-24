@@ -1,0 +1,122 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(17, 24, 39, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.backdropBlur {
+    backdrop-filter: blur(8px);
+}
+
+.modal {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 580px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s ease-out;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-5);
+    border-bottom: 1px solid var(--border);
+    gap: var(--space-4);
+}
+
+.title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+.closeButton {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: calc(var(--radius) / 2);
+    transition: all 0.15s ease;
+}
+
+.closeButton:hover {
+    background: var(--surface2);
+    color: var(--text);
+}
+
+.closeButton:active {
+    transform: scale(0.95);
+}
+
+.content {
+    padding: var(--space-5);
+    overflow-y: auto;
+    flex: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 640px) {
+    .backdrop {
+        padding: var(--space-3);
+    }
+
+    .modal {
+        max-height: 95vh;
+    }
+
+    .header {
+        padding: var(--space-4);
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .content {
+        padding: var(--space-4);
+    }
+
+    .closeButton {
+        width: 36px;
+        height: 36px;
+    }
+}
