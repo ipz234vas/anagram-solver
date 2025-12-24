@@ -18,10 +18,14 @@ import {
 
 import {checkWordCompletion} from "@shared/utils";
 
-export function GamePage({onGameEnd, gameFilters = {}}) {
+export function GamePage({onGameEnd, settings}) {
     const timerRef = useRef(null);
     const timerStartedRef = useRef(false);
-
+    const gameFilters = {
+        categories: [settings.category],
+        minLength: [settings.minWordLength],
+        maxLength: [settings.maxWordLength],
+    }
     const {filteredWords, isLoading, error} = useWords(gameFilters);
 
     const {
@@ -53,13 +57,25 @@ export function GamePage({onGameEnd, gameFilters = {}}) {
         applyHintAtIndex
     );
 
+    const handleGameEnd = useCallback(() => {
+        const totalSeconds = settings.timeSeconds - timerRef.current.timeLeft;
+        const result = {
+            timeSeconds: totalSeconds,
+            score: score,
+            wordsGuessed: wordsCompleted,
+            wordsSkipped: wordsSkipped,
+            coefficient: (totalSeconds / settings.timeSeconds * 100).toFixed(2),
+        };
+        onGameEnd(result);
+    }, [onGameEnd, settings.timeSeconds, score, wordsCompleted, wordsSkipped]);
+
     const {handleShuffle, handleSkipWord, handleEndGame, skipPenalty} = useGameControls(
         roundState,
         updateRoundState,
         startNewRound,
         subtractScore,
         incrementWordsSkipped,
-        onGameEnd,
+        handleGameEnd,
         timerRef
     );
 
@@ -91,8 +107,8 @@ export function GamePage({onGameEnd, gameFilters = {}}) {
     }, [roundState?.currentWord, roundState?.targetWord, roundState?.currentWordScore, addScore, incrementWordsCompleted, startNewRound]);
 
     const handleTimeOver = useCallback(() => {
-        onGameEnd();
-    }, [onGameEnd]);
+        handleGameEnd();
+    }, [handleGameEnd]);
 
     const handleLetterTileClick = useCallback((index) => {
         if (roundState?.availableLetters?.[index]) {
@@ -161,7 +177,7 @@ export function GamePage({onGameEnd, gameFilters = {}}) {
                 timerSlot={
                     <GameTimer
                         ref={timerRef}
-                        duration={120}
+                        duration={settings.timeSeconds}
                         warningAt={30}
                         dangerAt={10}
                         onTimeOver={handleTimeOver}

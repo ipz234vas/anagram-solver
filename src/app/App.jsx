@@ -6,19 +6,34 @@ import {useState} from "react";
 
 function App() {
     const [page, setPage] = useState("start");
+    const [gameResult, setGameResult] = useState(null);
 
     const goToStart = () => setPage("start");
     const goToGame = () => setPage("game");
-    const goToResults = () => setPage("results");
+    const goToResults = (result) => {
+        setGameResult(result);
+        setPage("results");
+    };
+
+    const settings = {
+        minWordLength: 4,
+        maxWordLength: 6,
+        timeSeconds: 60,
+        category: 'Їжа'
+    };
 
     const renderPage = () => {
         switch (page) {
             case "start":
-                return <StartPage onStart={goToGame}/>;
+                return <StartPage settings={settings} onStart={goToGame}/>;
             case "game":
-                return <GamePage onGameEnd={goToResults}/>;
+                return <GamePage settings={settings} onGameEnd={goToResults}/>;
             case "results":
-                return <ResultPage onGoHome={goToStart} onPlayAgain={goToGame}/>;
+                return <ResultPage
+                    gameResult={gameResult}
+                    onGoHome={goToStart}
+                    onPlayAgain={goToGame}
+                />;
             default:
                 return null;
         }
