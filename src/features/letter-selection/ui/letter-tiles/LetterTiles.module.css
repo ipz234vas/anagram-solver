@@ -9,12 +9,12 @@
     appearance: none;
     width: 64px;
     height: 64px;
-    border: 2px solid var(--border);
+    border: 2px solid var(--border-500);
     border-radius: 12px;
-    background: var(--surface2);
+    background: var(--surface2-500);
     font-size: 28px;
     font-weight: 800;
-    color: var(--text);
+    color: var(--neutral-500);
     cursor: pointer;
     transition: all 180ms ease;
     display: flex;
@@ -23,27 +23,21 @@
 }
 
 .tile:hover {
-    border-color: var(--accent);
+    border-color: var(--accent-500);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(109, 94, 252, 0.2);
+    box-shadow: 0 4px 12px var(--neutral-300);
 }
 
 .tile:active {
     transform: translateY(0);
 }
 
-.selected {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-}
-
 .disabled {
     opacity: 0.4;
     cursor: not-allowed;
     pointer-events: none;
-    background: var(--surface2);
-    border-color: var(--border);
+    background: var(--surface2-500);
+    border-color: var(--border-500);
     box-shadow: none;
 }
 

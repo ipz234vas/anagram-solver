@@ -9,9 +9,9 @@
     align-items: center;
     gap: var(--space-6);
     padding: var(--space-5);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-500);
     border-radius: var(--radius);
-    background: var(--surface);
+    background: var(--surface-500);
 }
 
 .wordInfo {
@@ -25,17 +25,17 @@
 .category,
 .wordScore {
     font-size: 0.95rem;
-    color: var(--text-secondary);
+    color: var(--neutral-400);
     padding: var(--space-2) var(--space-4);
-    background: var(--background);
-    border: 1px solid var(--border);
+    background: var(--background-500);
+    border: 1px solid var(--border-500);
     border-radius: var(--radius);
     text-align: center;
 }
 
 .category strong,
 .wordScore strong {
-    color: var(--text-primary);
+    color: var(--neutral-500);
     font-weight: 600;
     font-size: 1.05rem;
 }
@@ -55,7 +55,7 @@
 .loadingState p,
 .errorState p {
     font-size: 1.1rem;
-    color: var(--text-secondary);
+    color: var(--neutral-400);
 }
 
 .tilesRow {
@@ -74,7 +74,7 @@
     align-items: center;
     gap: var(--space-4);
     padding-top: var(--space-4);
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--border-500);
     width: 100%;
 }
 

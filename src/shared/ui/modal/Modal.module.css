@@ -15,7 +15,7 @@
 }
 
 .modal {
-    background: var(--surface);
+    background: var(--surface-500);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     width: 100%;
@@ -32,7 +32,7 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--space-5);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--border-500);
     gap: var(--space-4);
 }
 
@@ -40,7 +40,7 @@
     margin: 0;
     font-size: 22px;
     font-weight: 800;
-    color: var(--text);
+    color: var(--neutral-500);
     line-height: 1.2;
 }
 
@@ -53,15 +53,15 @@
     justify-content: center;
     border: none;
     background: transparent;
-    color: var(--muted);
+    color: var(--muted-500);
     cursor: pointer;
     border-radius: calc(var(--radius) / 2);
     transition: all 0.15s ease;
 }
 
 .closeButton:hover {
-    background: var(--surface2);
-    color: var(--text);
+    background: var(--surface2-500);
+    color: var(--neutral-500);
 }
 
 .closeButton:active {

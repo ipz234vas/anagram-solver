@@ -13,7 +13,7 @@
 .label {
     font-size: 14px;
     font-weight: 600;
-    color: var(--text);
+    color: var(--neutral-500);
 }
 
 .input,
@@ -22,8 +22,8 @@
     padding: var(--space-3);
     font-size: 16px;
     font-weight: 500;
-    color: var(--text);
-    background: var(--surface2);
+    color: var(--neutral-500);
+    background: var(--surface2-500);
     border: 2px solid transparent;
     border-radius: calc(var(--radius) / 2);
     outline: none;
@@ -33,13 +33,13 @@
 
 .input:focus,
 .select:focus {
-    background: var(--surface);
-    border-color: var(--accent);
+    background: var(--surface-500);
+    border-color: var(--accent-500);
 }
 
 .input:hover,
 .select:hover {
-    background: var(--surface);
+    background: var(--surface-500);
 }
 
 .select {
@@ -52,13 +52,13 @@
 }
 
 .inputError {
-    border-color: var(--danger);
+    border-color: var(--danger-500);
     background: rgba(232, 59, 82, 0.05);
 }
 
 .error {
     font-size: 13px;
-    color: var(--danger);
+    color: var(--danger-500);
     font-weight: 500;
 }
 

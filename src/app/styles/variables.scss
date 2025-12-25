@@ -43,19 +43,6 @@ $steps-dark: (
 }
 
 :root {
-  --bg: #f6f7fb;
-  --surface: #ffffff;
-  --surface2: #f1f3f9;
-
-  --text: #111827;
-  --muted: rgba(17, 24, 39, 0.62);
-  --border: rgba(17, 24, 39, 0.12);
-
-  --accent: #6d5efc;
-  --accent2: #18b981;
-  --danger: #e83b52;
-  --warning: #f2b94b;
-
   --radius: 18px;
 
   --space-1: 4px;
@@ -67,14 +54,16 @@ $steps-dark: (
 
   --shadow: 0 18px 45px rgba(17, 24, 39, 0.10);
 
-  @include css-palette-advanced("primary", #6d5efc);
+  @include css-palette-advanced("accent", #6d5efc);
   @include css-palette-advanced("success", #18b981);
   @include css-palette-advanced("danger",  #e83b52);
   @include css-palette-advanced("warning", #f2b94b);
 
   @include css-palette-advanced("neutral", #111827);
+  @include css-palette-advanced("muted", #1118279E);
+  @include css-palette-advanced("border", #1118271E);
 
-  @include css-palette-advanced("bg", #f6f7fb, #ffffff, #111827);
+  @include css-palette-advanced("background", #f6f7fb, #ffffff, #111827);
   @include css-palette-advanced("surface", #ffffff, #f6f7fb, #111827);
   @include css-palette-advanced("surface2", #f1f3f9, #ffffff, #111827);
 }

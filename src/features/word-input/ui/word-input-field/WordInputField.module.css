@@ -6,5 +6,5 @@
 }
 
 .invalid {
-    color: var(--danger);
+    color: var(--danger-500);
 }
