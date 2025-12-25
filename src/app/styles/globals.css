@@ -11,8 +11,8 @@ html, body {
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    background: var(--background-500);
+    color: var(--neutral-500);
 }
 
 a {

@@ -1,8 +1,8 @@
 .card {
     padding: var(--space-5);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-500);
     border-radius: var(--radius);
-    background: var(--surface);
+    background: var(--surface-500);
 }
 
 @media (max-width: 640px) {

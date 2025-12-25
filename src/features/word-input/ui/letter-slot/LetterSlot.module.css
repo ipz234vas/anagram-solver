@@ -2,49 +2,49 @@
     appearance: none;
     width: 64px;
     height: 80px;
-    border: 2px solid var(--border);
+    border: 2px solid var(--border-500);
     border-radius: 12px;
-    background: var(--surface);
+    background: var(--surface-500);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 32px;
     font-weight: 800;
-    color: var(--text);
+    color: var(--neutral-500);
     transition: all 180ms ease;
     cursor: pointer;
 }
 
 .slot:hover {
-    border-color: var(--accent);
+    border-color: var(--accent-500);
     transform: translateY(-2px);
 }
 
 .filled {
-    background: var(--surface2);
+    background: var(--surface2-500);
 }
 
 .selected {
-    border-color: var(--accent);
-    background: rgba(109, 94, 252, 0.1);
-    box-shadow: 0 0 0 3px rgba(109, 94, 252, 0.15);
+    border-color: var(--accent-500);
+    background: var(--surface2-500);
+    box-shadow: 0 0 0 3px var(--accent-50);
 }
 
 .hint {
-    border-color: #f59e0b;
-    background: rgba(245, 158, 11, 0.1);
+    border-color: var(--warning-500);
+    background: var(--warning-100);
     animation: pulse-hint 0.5s ease-in-out;
 }
 
 .error {
-    border-color: #ef4444;
-    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--danger-500);
+    background: var(--danger-100);
     animation: shake 0.3s ease-in-out;
 }
 
 .correct {
-    border-color: #10b981;
-    background: rgba(16, 185, 129, 0.1);
+    border-color: var(--success-500);
+    background: var(--success-100);
     animation: bounce 0.4s ease-in-out;
 }
 

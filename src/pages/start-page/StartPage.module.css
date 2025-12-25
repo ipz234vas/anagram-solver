@@ -22,14 +22,14 @@
     margin: 0;
     font-size: 32px;
     font-weight: 800;
-    color: var(--text);
+    color: var(--neutral-500);
     line-height: 1.1;
 }
 
 .description {
     margin: var(--space-3) 0 0;
     font-size: 15px;
-    color: var(--muted);
+    color: var(--muted-500);
     line-height: 1.5;
 }
 
@@ -37,7 +37,7 @@
     font-size: 16px;
     font-weight: 800;
     margin-bottom: var(--space-4);
-    color: var(--text);
+    color: var(--neutral-500);
 }
 
 .grid {

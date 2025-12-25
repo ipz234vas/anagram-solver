@@ -9,7 +9,7 @@
 .label {
     font-size: 12px;
     font-weight: 600;
-    color: var(--muted);
+    color: var(--muted-500);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -17,7 +17,7 @@
 .value {
     font-weight: 800;
     font-family: 'Courier New', monospace;
-    color: var(--text);
+    color: var(--neutral-500);
     line-height: 1;
     transition: color 180ms ease;
 }
@@ -48,24 +48,24 @@
 .pill {
     padding: var(--space-2) var(--space-3);
     border-radius: 100px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
+    background: var(--surface2-500);
+    border: 1px solid var(--border-500);
 }
 
 .badge {
     padding: var(--space-1) var(--space-3);
     border-radius: 8px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
+    background: var(--surface2-500);
+    border: 1px solid var(--border-500);
 }
 
 /* States */
 .warning .value {
-    color: var(--warning);
+    color: var(--warning-500);
 }
 
 .danger .value {
-    color: var(--danger);
+    color: var(--danger-500);
     animation: pulse 1s ease-in-out infinite;
 }
 
