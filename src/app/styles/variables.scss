@@ -1,0 +1,80 @@
+@use "sass:map";
+@use "sass:color";
+
+$steps-light: (
+        50:  92%,
+        100: 84%,
+        200: 72%,
+        300: 60%,
+        400: 40%
+);
+
+$steps-dark: (
+        600: 10%,
+        700: 22%,
+        800: 34%,
+        900: 46%
+);
+
+@function tone($base, $level, $lightMix: #ffffff, $darkMix: #000000) {
+  @if $level == 500 {
+    @return $base;
+  } @else if map.has-key($steps-light, $level) {
+    $p: map.get($steps-light, $level);
+    @return color.mix($lightMix, $base, $p);
+  } @else if map.has-key($steps-dark, $level) {
+    $p: map.get($steps-dark, $level);
+    @return color.mix($darkMix, $base, $p);
+  } @else {
+    @error "Unknown shade level: #{$level}. Use 50..900.";
+  }
+}
+
+@mixin css-palette-advanced($name, $base, $lightMix: #ffffff, $darkMix: #000000) {
+  @each $lvl, $p in $steps-light {
+    --#{$name}-#{$lvl}: #{tone($base, $lvl, $lightMix, $darkMix)};
+  }
+
+  --#{$name}-500: #{$base};
+
+  @each $lvl, $p in $steps-dark {
+    --#{$name}-#{$lvl}: #{tone($base, $lvl, $lightMix, $darkMix)};
+  }
+}
+
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --surface2: #f1f3f9;
+
+  --text: #111827;
+  --muted: rgba(17, 24, 39, 0.62);
+  --border: rgba(17, 24, 39, 0.12);
+
+  --accent: #6d5efc;
+  --accent2: #18b981;
+  --danger: #e83b52;
+  --warning: #f2b94b;
+
+  --radius: 18px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --shadow: 0 18px 45px rgba(17, 24, 39, 0.10);
+
+  @include css-palette-advanced("primary", #6d5efc);
+  @include css-palette-advanced("success", #18b981);
+  @include css-palette-advanced("danger",  #e83b52);
+  @include css-palette-advanced("warning", #f2b94b);
+
+  @include css-palette-advanced("neutral", #111827);
+
+  @include css-palette-advanced("bg", #f6f7fb, #ffffff, #111827);
+  @include css-palette-advanced("surface", #ffffff, #f6f7fb, #111827);
+  @include css-palette-advanced("surface2", #f1f3f9, #ffffff, #111827);
+}
