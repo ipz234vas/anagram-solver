@@ -1,21 +1,10 @@
 import { useCallback } from "react";
-import { usePersistentState } from "@shared/hooks/usePersistentState.js";
-
-export const WORD_LENGTH_CONSTRAINTS = { MIN: 4, MAX: 8 };
-export const TIME_CONSTRAINTS = { MIN: 30, MAX: 300 };
-
-export const DEFAULT_SETTINGS = {
-    minWordLength: 4,
-    maxWordLength: 6,
-    timeSeconds: 60,
-    category: "",
-};
-
-const STORAGE_KEY = "anagram:settings";
+import {useGameSettingsStore} from "@features/game-settings/model/gameSettings.store.js";
 
 export function useGameSettings() {
-    const { value: settings, setValue: setSettings, reset } =
-        usePersistentState(STORAGE_KEY, DEFAULT_SETTINGS);
+    const settings = useGameSettingsStore((s) => s.settings);
+    const updateSettings = useGameSettingsStore((s) => s.updateSettings);
+    const reset = useGameSettingsStore((s) => s.reset);
 
     const isValid = useCallback(() => {
         return Boolean(
@@ -28,7 +17,7 @@ export function useGameSettings() {
 
     return {
         settings,
-        updateSettings: setSettings,
+        updateSettings,
         reset,
         isValid,
     };

@@ -3,10 +3,7 @@ import { useEffect } from "react";
 import { Modal, Button } from "@shared/ui";
 import styles from "./SettingsModal.module.css";
 import { useCategories } from "@features/words/index.js";
-import {
-    WORD_LENGTH_CONSTRAINTS,
-    TIME_CONSTRAINTS
-} from "@features/game-settings/hooks/useGameSettings";
+import {TIME_CONSTRAINTS, WORD_LENGTH_CONSTRAINTS} from "@features/game-settings/index.js";
 
 export function SettingsModal({ isOpen, onClose, settings, onSave }) {
     const { categories, isLoading: categoriesLoading } = useCategories();
