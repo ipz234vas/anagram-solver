@@ -1,16 +1,19 @@
-import { useState } from "react";
+import {useState} from "react";
 import styles from "./StartPage.module.css";
-import { Button, Card } from "@shared/ui";
-import { StatItem } from "@features/game-stats";
-import { SettingsModal, useGameSettings } from "@features/game-settings";
+import {Button, Card} from "@shared/ui";
+import {StatItem} from "@features/game-stats";
+import {SettingsModal, useGameSettings} from "@features/game-settings";
+import {useNavigate} from "react-router";
+import {routes} from "@shared/config/routes.js";
 
-export function StartPage({ onStart }) {
+export function StartPage() {
+    const navigate = useNavigate();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const { settings, updateSettings, isValid } = useGameSettings();
+    const {settings, updateSettings, isValid} = useGameSettings();
 
     const handleStart = () => {
         if (isValid()) {
-            onStart(settings);
+            navigate(routes.gamePath);
         }
     };
 

@@ -1,3 +1,5 @@
+export {formatPercent} from "@shared/utils/percentHelper.js";
+
 export {
     shuffleArray,
     createLetter,

@@ -1,0 +1,47 @@
+.root {
+    display: grid;
+    gap: 14px;
+}
+
+.coefficientCard {
+    position: relative;
+    padding: 18px;
+    border: 1px solid var(--border-500);
+}
+
+.recordBadgeWrapper {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.coefficientLabel {
+    font-size: 12px;
+    color: var(--muted-500);
+}
+
+.coefficientValue {
+    margin-top: 6px;
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--neutral-500);
+}
+
+.coefficientDescription {
+    margin: 10px 0 0;
+    color: var(--muted-500);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.smallActions {
+    display: flex;
+    gap: 10px;
+}
