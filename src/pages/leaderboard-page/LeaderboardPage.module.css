@@ -1,0 +1,142 @@
+.root {
+    width: min(980px, 100%);
+    margin: 0 auto;
+    display: grid;
+    gap: 14px;
+}
+
+.header {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.1;
+}
+
+.subtitle {
+    margin: 6px 0 0;
+    color: var(--muted-500);
+    font-size: 12px;
+}
+
+.meta {
+    padding: 8px 10px;
+    border-radius: 12px;
+    border: 1px solid var(--border-500);
+    background: var(--surface2-500);
+    font-size: 12px;
+    color: var(--neutral-500);
+    white-space: nowrap;
+}
+
+.tableCard {
+    padding: 10px;
+}
+
+.table {
+    display: grid;
+    gap: 6px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 52px 1fr 140px;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 14px;
+}
+
+.head {
+    background: var(--surface2-500);
+    border: 1px solid var(--border-500);
+    color: var(--muted-500);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.bodyRow {
+    appearance: none;
+    border: 1px solid var(--border-500);
+    background: var(--surface-500);
+    cursor: pointer;
+    text-align: left;
+    transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.bodyRow:hover {
+    background: var(--surface2-500);
+    transform: translateY(-1px);
+}
+
+.rank {
+    font-weight: 900;
+    color: var(--muted-500);
+}
+
+.nameCell {
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.name {
+    font-weight: 900;
+    color: var(--neutral-500);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 520px;
+}
+
+.meBadge {
+    font-size: 11px;
+    font-weight: 900;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent-500) 12%, var(--surface2-500));
+    border: 1px solid color-mix(in srgb, var(--accent-500) 35%, var(--border-500));
+    color: var(--neutral-500);
+}
+
+.me {
+    border-color: color-mix(in srgb, var(--accent-500) 35%, var(--border-500));
+    background: color-mix(in srgb, var(--accent-500) 7%, var(--surface-500));
+}
+
+.value {
+    font-weight: 900;
+    color: var(--neutral-500);
+}
+
+.right {
+    text-align: right;
+}
+
+.empty {
+    padding: 18px 12px;
+    border: 1px dashed var(--border-500);
+    border-radius: 14px;
+    color: var(--muted-500);
+    text-align: center;
+}
+
+@media (max-width: 520px) {
+    .row {
+        grid-template-columns: 44px 1fr 110px;
+    }
+
+    .name {
+        max-width: 220px;
+    }
+}
