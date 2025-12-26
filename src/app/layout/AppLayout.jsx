@@ -1,6 +1,8 @@
+import {Outlet} from "react-router";
 import styles from "@app/layout/AppLayout.module.css";
+import {NavigationLink} from "@app/layout/NavigationLink.jsx";
 
-export function AppLayout({ title, subtitle, children }) {
+export function AppLayout({title, subtitle, navLinks = [], profileLink}) {
     return (
         <div className={styles.root}>
             <header className={styles.header}>
@@ -9,6 +11,7 @@ export function AppLayout({ title, subtitle, children }) {
                         <div className={styles.logo} aria-hidden>
                             A
                         </div>
+
                         <div className={styles.brandText}>
                             <div className={styles.titleRow}>
                                 <div className={styles.title}>{title}</div>
@@ -19,24 +22,27 @@ export function AppLayout({ title, subtitle, children }) {
                     </div>
 
                     <nav className={styles.nav} aria-label="Primary navigation">
-                        <button className={`${styles.navItem} ${styles.navActive}`} type="button">
-                            Головна
-                        </button>
-                        <button className={styles.navItem} type="button">
-                            Таблиця лідерів
-                        </button>
+                        {navLinks.map((l) => (
+                            <NavigationLink key={l.to} to={l.to} end={l.end}>
+                                {l.label}
+                            </NavigationLink>
+                        ))}
                     </nav>
 
                     <div className={styles.actions}>
-                        <button className={styles.linkBtn} type="button">
-                            Профіль
-                        </button>
+                        {profileLink ? (
+                            <NavigationLink to={profileLink.to} className={styles.profileCta}>
+                                {profileLink.label}
+                            </NavigationLink>
+                        ) : null}
                     </div>
                 </div>
             </header>
 
             <main className={styles.main}>
-                <div className={styles.container}>{children}</div>
+                <div className={styles.container}>
+                    <Outlet/>
+                </div>
             </main>
 
             <footer className={styles.footer}>
@@ -44,7 +50,7 @@ export function AppLayout({ title, subtitle, children }) {
                     <div className={styles.footerLeft}>
                         <span className={styles.footerTitle}>Anagram Solver</span>
                         <span className={styles.footerSep} aria-hidden>•</span>
-                        <span className={styles.footerText}>Lab 1</span>
+                        <span className={styles.footerText}>Lab 4</span>
                     </div>
 
                     <div className={styles.footerRight}>
