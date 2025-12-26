@@ -1,11 +1,13 @@
 import styles from "./ResultPage.module.css";
 import { Button, Card } from "@shared/ui";
 import { StatItem, RecordBadge } from "@features/game-stats";
+import {useNavigate} from "react-router";
+import {routes} from "@shared/config/routes.js";
 
-export function ResultPage({ gameResult, isNewRecord, onPlayAgain, onGoHome }) {
-    // gameResult = { timeSeconds, score, wordsGuessed, wordsSkipped, coefficient }
-    isNewRecord = true;
-    const result = gameResult || {
+export function ResultPage() {
+    const navigate = useNavigate();
+    const isNewRecord = true;
+    const result = {
         timeSeconds: 45,
         score: 32,
         wordsGuessed: 8,
@@ -64,7 +66,7 @@ export function ResultPage({ gameResult, isNewRecord, onPlayAgain, onGoHome }) {
                         variant="secondary"
                         type="button"
                         size="large"
-                        onClick={onGoHome}
+                        onClick={() => {navigate(routes.startPath)}}
                     >
                         На головну
                     </Button>
@@ -73,7 +75,7 @@ export function ResultPage({ gameResult, isNewRecord, onPlayAgain, onGoHome }) {
                         variant="primary"
                         type="button"
                         size="large"
-                        onClick={onPlayAgain}
+                        onClick={() => {navigate(routes.gamePath)}}
                     >
                         Грати ще раз
                     </Button>

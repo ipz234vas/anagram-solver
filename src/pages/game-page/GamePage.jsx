@@ -1,13 +1,12 @@
 import styles from './GamePage.module.css';
-import { GameStatsBar } from "@features/game-session";
-import { GameActions } from "@features/game-controls";
-import { WordInputField } from "@features/word-input";
-import { LetterTiles } from "@features/letter-selection";
-import { GameTimer } from "@features/timer";
-import { Button, Modal } from "@shared/ui";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useWords } from "@features/words";
-import { ResultPage } from "@pages/result-page/ResultPage.jsx";
+import {GameStatsBar} from "@features/game-session";
+import {GameActions} from "@features/game-controls";
+import {WordInputField} from "@features/word-input";
+import {LetterTiles} from "@features/letter-selection";
+import {GameTimer} from "@features/timer";
+import {Button, Modal} from "@shared/ui";
+import {useCallback, useEffect, useRef, useState} from "react";
+import {useWords} from "@features/words";
 
 import {
     useGameRound,
@@ -17,11 +16,14 @@ import {
     useGameControls
 } from "@features/game-flow";
 
-import { checkWordCompletion } from "@shared/utils";
-import { useGameSettings } from "@features/game-settings/index.js";
+import {checkWordCompletion} from "@shared/utils";
+import {useGameSettings} from "@features/game-settings/index.js";
+import {routes} from "@shared/config/routes.js";
+import {useNavigate} from "react-router";
 
-export function GamePage({ onGameEnd, onGoHome }) {
-    const { settings } = useGameSettings();
+export function GamePage() {
+    const navigate = useNavigate();
+    const {settings} = useGameSettings();
     const [showResults, setShowResults] = useState(false);
     const [gameResult, setGameResult] = useState(null);
 
@@ -34,7 +36,7 @@ export function GamePage({ onGameEnd, onGoHome }) {
         maxLength: [settings.maxWordLength],
     };
 
-    const { filteredWords, isLoading, error } = useWords(gameFilters);
+    const {filteredWords, isLoading, error} = useWords(gameFilters);
 
     const {
         score,
@@ -52,14 +54,14 @@ export function GamePage({ onGameEnd, onGoHome }) {
         updateRoundState
     } = useGameRound(filteredWords);
 
-    const { toggleHintMode, applyHintAtIndex, canUseHint, hintPenalty } = useHintLogic(
+    const {toggleHintMode, applyHintAtIndex, canUseHint, hintPenalty} = useHintLogic(
         roundState,
         updateRoundState,
         score,
         subtractScore
     );
 
-    const { handleSlotClick, handleCursorClick, handleLetterClick } = useWordInput(
+    const {handleSlotClick, handleCursorClick, handleLetterClick} = useWordInput(
         roundState,
         updateRoundState,
         applyHintAtIndex
@@ -84,7 +86,7 @@ export function GamePage({ onGameEnd, onGoHome }) {
         setShowResults(true);
     }, [settings.timeSeconds, score, wordsCompleted, wordsSkipped]);
 
-    const { handleShuffle, handleSkipWord, handleEndGame, skipPenalty } = useGameControls(
+    const {handleShuffle, handleSkipWord, handleEndGame, skipPenalty} = useGameControls(
         roundState,
         updateRoundState,
         startNewRound,
@@ -107,7 +109,7 @@ export function GamePage({ onGameEnd, onGoHome }) {
     useEffect(() => {
         if (!roundState) return;
 
-        const { isComplete, isCorrect } = checkWordCompletion(
+        const {isComplete, isCorrect} = checkWordCompletion(
             roundState.currentWord,
             roundState.targetWord
         );
@@ -141,15 +143,19 @@ export function GamePage({ onGameEnd, onGoHome }) {
         }
     }, [roundState, handleLetterClick]);
 
-    const handlePlayAgain = useCallback(() => {
+    const resetGame = () => {
+        navigate(0);
+    };
+
+    const handleGoHome =() => {
+        navigate(routes.startPath);
+    };
+
+    const handlePlayAgain = () => {
         setShowResults(false);
         setGameResult(null);
-        onGameEnd?.();
-    }, [onGameEnd]);
-
-    const handleGoHome = useCallback(() => {
-        onGoHome?.();
-    }, [onGoHome]);
+        resetGame();
+    };
 
     if (isLoading) {
         return (
@@ -166,7 +172,7 @@ export function GamePage({ onGameEnd, onGoHome }) {
             <div className={styles.root}>
                 <div className={styles.errorState}>
                     <p>Помилка завантаження: {error}</p>
-                    <Button onClick={() => window.location.reload()}>
+                    <Button onClick={resetGame}>
                         Спробувати знову
                     </Button>
                 </div>
@@ -184,7 +190,7 @@ export function GamePage({ onGameEnd, onGoHome }) {
         );
     }
 
-    const { isWrong: isInvalid } = checkWordCompletion(
+    const {isWrong: isInvalid} = checkWordCompletion(
         roundState.currentWord,
         roundState.targetWord
     );
@@ -279,15 +285,11 @@ export function GamePage({ onGameEnd, onGoHome }) {
                 onClose={handleGoHome}
                 title="Результати гри"
                 hasBackdropBlur={true}
-                showCloseButton={false}
+                showCloseButton={true}
             >
-                {gameResult && (
-                    <ResultPage
-                        gameResult={gameResult}
-                        onGoHome={handleGoHome}
-                        onPlayAgain={handlePlayAgain}
-                    />
-                )}
+                {gameResult ? (
+                    <>{ /*TODO Result modal*/}</>
+                ) : null}
             </Modal>
         </div>
     );
