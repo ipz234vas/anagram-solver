@@ -1,0 +1,209 @@
+.root {
+    width: min(980px, 100%);
+    margin: 0 auto;
+    display: grid;
+    gap: 14px;
+}
+
+.header {
+    padding: 16px;
+}
+
+.headerTop {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.1;
+}
+
+.subtitle {
+    margin: 6px 0 0;
+    color: var(--muted-500);
+    font-size: 12px;
+}
+
+.badges {
+    display: inline-flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--surface2-500);
+    border: 1px solid var(--border-500);
+    color: var(--neutral-500);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.badgeActive {
+    background: color-mix(in srgb, var(--success-500) 12%, var(--surface2-500));
+    border-color: color-mix(in srgb, var(--success-500) 35%, var(--border-500));
+}
+
+.badgeMuted {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px dashed var(--border-500);
+    color: var(--muted-500);
+    font-size: 12px;
+}
+
+.userRow {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+}
+
+.userAvatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    color: var(--accent-500);
+    border: 1px solid var(--accent-500);
+    background: var(--surface2-500);
+}
+
+.userInfo {
+    min-width: 0;
+    display: grid;
+    gap: 3px;
+}
+
+.userName {
+    font-size: 16px;
+    font-weight: 900;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.userMeta {
+    color: var(--muted-500);
+    font-size: 12px;
+}
+
+.userActions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.link {
+    color: var(--accent-500);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 10px;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.stats {
+    padding: 16px;
+}
+
+.sectionTitle {
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--neutral-500);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.stat {
+    border: 1px solid var(--border-500);
+    background: var(--surface2-500);
+    border-radius: 16px;
+    padding: 12px;
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+}
+
+.statLabel {
+    color: var(--muted-500);
+    font-size: 12px;
+}
+
+.statValue {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--neutral-500);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.footer {
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footerText {
+    color: var(--muted-500);
+    font-size: 12px;
+}
+
+.footerActions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 960px) {
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .userRow {
+        grid-template-columns: auto 1fr;
+    }
+
+    .userActions {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+    }
+
+    .footerActions {
+        width: 100%;
+    }
+
+    .footerActions > button {
+        width: 100%;
+    }
+}

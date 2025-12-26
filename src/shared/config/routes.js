@@ -5,4 +5,6 @@ export const routes = {
     userPath: "/user/:id",
     buildUserPath: (id) => `/user/${id}`,
     leaderboardPath: "/leaderboard",
+    loginPath: "/login",
+    profilePath: "/profile",
 };
