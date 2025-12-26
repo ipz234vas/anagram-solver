@@ -17,11 +17,11 @@ import {
 } from "@features/game-flow";
 
 import {checkWordCompletion} from "@shared/utils";
-import {useGameSettings} from "@features/game-settings/index.js";
+import {useGameSettings} from "@features/game-settings";
 import {routes} from "@shared/config/routes.js";
 import {useNavigate} from "react-router";
 import {ResultSummaryModal} from "@features/game-result";
-import { usersStorage } from "@features/auth";
+import {usersStorage} from "@features/auth";
 
 export function GamePage() {
     const navigate = useNavigate();
@@ -76,12 +76,12 @@ export function GamePage() {
 
         const coefficient = elapsedSeconds > 0 ? (score / elapsedSeconds * 60) : 0;
 
-        const { isNewRecord } = usersStorage.updateStatsAfterSession({
+        const {isNewRecord} = usersStorage.updateStatsAfterSession({
             successRate: coefficient,
             score,
             timeSeconds: elapsedSeconds,
             wordsSolved: wordsCompleted,
-        }) ?? { isNewRecord: false };
+        }) ?? {isNewRecord: false};
 
         const result = {
             timeSeconds: elapsedSeconds,
