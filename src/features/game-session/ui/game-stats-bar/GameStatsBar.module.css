@@ -14,12 +14,12 @@
 .value {
     font-size: 20px;
     font-weight: 800;
-    color: var(--text);
+    color: var(--neutral-500);
 }
 
 .label {
     font-size: 14px;
-    color: var(--text);
+    color: var(--neutral-500);
     line-height: 1.4;
 }
 

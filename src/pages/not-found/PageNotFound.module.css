@@ -1,0 +1,75 @@
+.root {
+    min-height: calc(100vh - 160px);
+    display: grid;
+    place-items: center;
+    padding: clamp(14px, 3vw, 24px);
+}
+
+.card {
+    width: min(720px, 100%);
+    background: var(--surface-500);
+    border: 1px solid var(--border-500);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: clamp(16px, 3vw, 28px);
+    display: grid;
+    gap: 12px;
+    text-align: center;
+}
+
+.badge {
+    justify-self: center;
+    width: 92px;
+    height: 92px;
+    border-radius: 24px;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: 0.5px;
+
+    color: var(--accent-500);
+    background: var(--surface2-500);
+    border: 1px solid var(--border-500);
+}
+
+.title {
+    margin: 0;
+    font-size: clamp(20px, 2.6vw, 28px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--neutral-500);
+}
+
+.text {
+    margin: 0;
+    color: var(--muted-500);
+    line-height: 1.5;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+.hint {
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--muted-500);
+    font-size: 12px;
+    flex-wrap: wrap;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--warning-500);
+    border: 1px solid var(--border-500);
+}

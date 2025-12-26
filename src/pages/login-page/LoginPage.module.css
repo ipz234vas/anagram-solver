@@ -1,0 +1,70 @@
+.root {
+    width: min(620px, 100%);
+    margin: 0 auto;
+    padding: 18px 0;
+    display: grid;
+}
+
+.card {
+    padding: 18px;
+}
+
+.title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--neutral-500);
+}
+
+.subtitle {
+    margin: 6px 0 0;
+    color: var(--muted-500);
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.form {
+    margin-top: 12px;
+    display: grid;
+    gap: 10px;
+}
+
+.label {
+    display: grid;
+    gap: 6px;
+}
+
+.labelText {
+    font-size: 12px;
+    color: var(--muted-500);
+}
+
+.input {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border-500);
+    background: var(--surface-500);
+    color: var(--neutral-500);
+    outline: none;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.input::placeholder {
+    color: var(--muted-500);
+}
+
+.input:focus {
+    border-color: color-mix(in srgb, var(--accent-500) 45%, var(--border-500));
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-500) 14%, transparent);
+}
+
+@media (max-width: 520px) {
+    .root {
+        padding: 0;
+    }
+
+    .card {
+        padding: 16px;
+    }
+}

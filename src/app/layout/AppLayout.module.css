@@ -2,29 +2,31 @@
     min-height: 100vh;
     display: grid;
     grid-template-rows: auto 1fr auto;
-    background: var(--bg);
-    color: var(--text);
+    background: var(--background-500);
+    color: var(--neutral-500);
 }
 
 .header {
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
+    border-bottom: 1px solid var(--border-500);
+    background: var(--surface-500);
 }
 
 .headerInner {
-    max-width: 1100px;
+    width: min(1100px, 100%);
     margin: 0 auto;
-    padding: 14px 18px;
+    padding: 14px clamp(12px, 3vw, 18px);
     display: flex;
     align-items: center;
     gap: 16px;
+    flex-wrap: wrap;
 }
 
 .brand {
     display: flex;
     align-items: center;
     gap: 12px;
-    min-width: 240px;
+    min-width: 0;
+    flex: 0 1 auto;
 }
 
 .logo {
@@ -34,14 +36,16 @@
     display: grid;
     place-items: center;
     font-weight: 800;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    background: var(--surface2);
+    color: var(--accent-500);
+    border: 1px solid var(--accent-500);
+    background: var(--surface2-500);
+    flex: 0 0 auto;
 }
 
 .brandText {
     display: grid;
     gap: 2px;
+    min-width: 0;
 }
 
 .titleRow {
@@ -54,87 +58,100 @@
     font-size: 16px;
     font-weight: 800;
     line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .version {
     font-size: 12px;
-    color: var(--muted);
+    color: var(--muted-500);
 }
 
 .subtitle {
     font-size: 12px;
-    color: var(--muted);
+    color: var(--muted-500);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .nav {
     display: flex;
     gap: 6px;
-    flex: 1;
+    flex: 1 1 320px;
     justify-content: center;
+
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.nav::-webkit-scrollbar {
+    display: none;
 }
 
 .navItem {
     appearance: none;
     border: 1px solid transparent;
     background: transparent;
-    color: var(--muted);
+    color: var(--muted-500);
     padding: 8px 10px;
     border-radius: 10px;
     cursor: pointer;
     transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
 }
 
 .navItem:hover {
-    background: var(--surface2);
-    border-color: var(--border);
-    color: var(--text);
+    background: var(--surface2-500);
+    border-color: var(--border-500);
+    color: var(--neutral-500);
 }
 
 .navActive {
-    background: var(--surface2);
-    border-color: var(--border);
-    color: var(--text);
+    background: var(--surface2-500);
+    border-color: var(--border-500);
+    color: var(--neutral-500);
 }
 
 .actions {
     display: flex;
     justify-content: flex-end;
-    min-width: 120px;
+    flex: 0 0 auto;
 }
 
-.linkBtn {
-    appearance: none;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 8px 10px;
-    border-radius: 10px;
-    cursor: pointer;
+.profileCta {
+    background: var(--accent-500);
+    color: var(--background-500);
+    border-color: var(--accent-800);
 }
-
-.linkBtn:hover {
-    background: var(--surface2);
+.profileCta:hover {
+    background: var(--accent-600);
+    border-color: var(--accent-900);
+    color: var(--background-500);
 }
 
 .main {
-    padding: 22px 18px;
+    padding: 22px clamp(12px, 3vw, 18px);
 }
 
 .container {
-    max-width: 1100px;
+    width: min(1100px, 100%);
     margin: 0 auto;
-    width: 100%;
 }
 
 .footer {
-    border-top: 1px solid var(--border);
-    background: var(--surface);
+    border-top: 1px solid var(--border-500);
+    background: var(--surface-500);
 }
 
 .footerInner {
-    max-width: 1100px;
+    width: min(1100px, 100%);
     margin: 0 auto;
-    padding: 12px 18px;
+    padding: 12px clamp(12px, 3vw, 18px);
     display: flex;
     justify-content: space-between;
     gap: 12px;
@@ -154,10 +171,27 @@
 }
 
 .footerText {
-    color: var(--muted);
+    color: var(--muted-500);
     font-size: 12px;
 }
 
 .footerSep {
-    color: var(--muted);
+    color: var(--muted-500);
+}
+
+@media (max-width: 720px) {
+    .headerInner {
+        gap: 10px;
+    }
+
+    .nav {
+        order: 3;
+        flex: 1 1 100%;
+        justify-content: flex-start;
+    }
+
+    .actions {
+        order: 2;
+        margin-left: auto;
+    }
 }

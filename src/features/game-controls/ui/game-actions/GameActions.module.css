@@ -10,10 +10,10 @@
     appearance: none;
     width: 56px;
     height: 56px;
-    border: 2px solid var(--border);
+    border: 2px solid var(--border-500);
     border-radius: 12px;
-    background: var(--surface);
-    color: var(--text);
+    background: var(--surface-500);
+    color: var(--neutral-500);
     cursor: pointer;
     transition: all 180ms ease;
     display: flex;
@@ -22,9 +22,9 @@
 }
 
 .iconBtn:hover {
-    background: var(--surface2);
-    border-color: var(--accent);
-    color: var(--accent);
+    background: var(--surface2-500);
+    border-color: var(--accent-500);
+    color: var(--accent-500);
     transform: translateY(-2px);
 }
 
@@ -38,9 +38,9 @@
 }
 
 .iconBtn.disabled:hover {
-    background: var(--surface);
-    border-color: var(--border);
-    color: var(--text);
+    background: var(--surface-500);
+    border-color: var(--border-500);
+    color: var(--neutral-500);
     transform: none;
 }
 
@@ -48,7 +48,7 @@
     position: absolute;
     bottom: -6px;
     right: -6px;
-    background: var(--danger);
+    background: var(--danger-500);
     color: white;
     font-size: 0.7rem;
     font-weight: 600;
@@ -59,7 +59,7 @@
 }
 
 .iconBtn.disabled .cost {
-    background: var(--muted);
+    background: var(--muted-500);
 }
 
 @media (max-width: 640px) {

@@ -16,7 +16,7 @@
 .indicator {
     width: 3px;
     height: 60%;
-    background: var(--border);
+    background: var(--border-500);
     border-radius: 2px;
     transition: all 180ms ease;
 }
@@ -24,13 +24,13 @@
 .cursor:hover .indicator {
     width: 4px;
     height: 70%;
-    background: var(--accent);
+    background: var(--accent-500);
 }
 
 .active .indicator {
     width: 4px;
     height: 80%;
-    background: var(--accent);
+    background: var(--accent-500);
     animation: pulse-cursor 1s ease-in-out infinite;
 }
 
