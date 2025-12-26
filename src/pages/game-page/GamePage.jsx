@@ -1,11 +1,11 @@
 import styles from './GamePage.module.css';
+import {useCallback, useEffect, useRef, useState} from "react";
 import {GameStatsBar} from "@features/game-session";
 import {GameActions} from "@features/game-controls";
 import {WordInputField} from "@features/word-input";
 import {LetterTiles} from "@features/letter-selection";
 import {GameTimer} from "@features/timer";
-import {Button, Modal} from "@shared/ui";
-import {useCallback, useEffect, useRef, useState} from "react";
+import {Button} from "@shared/ui";
 import {useWords} from "@features/words";
 
 import {
@@ -20,6 +20,7 @@ import {checkWordCompletion} from "@shared/utils";
 import {useGameSettings} from "@features/game-settings/index.js";
 import {routes} from "@shared/config/routes.js";
 import {useNavigate} from "react-router";
+import {ResultSummaryModal} from "@features/game-result";
 
 export function GamePage() {
     const navigate = useNavigate();
@@ -77,9 +78,8 @@ export function GamePage() {
             score: score,
             wordsGuessed: wordsCompleted,
             wordsSkipped: wordsSkipped,
-            coefficient: elapsedSeconds > 0
-                ? Number(((score / elapsedSeconds) * 60).toFixed(2))
-                : 0,
+            coefficient: elapsedSeconds > 0 ? (score / elapsedSeconds * 60) : 0,
+            isNewRecord: true //TODO fill this prop
         };
 
         setGameResult(result);
@@ -143,13 +143,18 @@ export function GamePage() {
         }
     }, [roundState, handleLetterClick]);
 
+    //TODO replace by clearing state
     const resetGame = () => {
         navigate(0);
     };
 
-    const handleGoHome =() => {
+    const handleGoHome = () => {
         navigate(routes.startPath);
     };
+
+    const handleGoToResults = () => {
+        navigate(routes.resultsPath, {state: gameResult});
+    }
 
     const handlePlayAgain = () => {
         setShowResults(false);
@@ -280,17 +285,15 @@ export function GamePage() {
                 </div>
             </div>
 
-            <Modal
+            <ResultSummaryModal
                 isOpen={showResults}
                 onClose={handleGoHome}
-                title="Результати гри"
-                hasBackdropBlur={true}
-                showCloseButton={true}
-            >
-                {gameResult ? (
-                    <>{ /*TODO Result modal*/}</>
-                ) : null}
-            </Modal>
+                successRate={gameResult?.coefficient}
+                isNewRecord={gameResult?.isNewRecord}
+                onViewDetails={handleGoToResults}
+                onGoHome={handleGoHome}
+                onTryAgain={handlePlayAgain}
+            />
         </div>
     );
 }

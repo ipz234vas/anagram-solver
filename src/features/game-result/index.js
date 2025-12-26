@@ -1,0 +1,1 @@
+export {ResultSummaryModal} from "@features/game-result/ui/ResultSummaryModal.jsx";

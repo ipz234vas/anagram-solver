@@ -1,18 +1,19 @@
 import styles from "./ResultPage.module.css";
-import { Button, Card } from "@shared/ui";
-import { StatItem, RecordBadge } from "@features/game-stats";
+import {Button, Card} from "@shared/ui";
+import {StatItem, RecordBadge} from "@features/game-stats";
 import {useNavigate} from "react-router";
 import {routes} from "@shared/config/routes.js";
+import {formatPercent} from "@shared/utils/index.js";
 
-export function ResultPage() {
+export function ResultPage({gameResult}) {
     const navigate = useNavigate();
-    const isNewRecord = true;
-    const result = {
+    const result = gameResult || {
         timeSeconds: 45,
         score: 32,
         wordsGuessed: 8,
         wordsSkipped: 2,
-        coefficient: (32 / 45 * 100).toFixed(2),
+        coefficient: 32 / 45 * 100,
+        isNewRecord: true
     };
 
     return (
@@ -26,13 +27,13 @@ export function ResultPage() {
                 </Card>
 
                 <Card as="section" className={styles.coefficientCard}>
-                    {isNewRecord && (
+                    {result?.isNewRecord && (
                         <div className={styles.recordBadgeWrapper}>
-                            <RecordBadge />
+                            <RecordBadge/>
                         </div>
                     )}
                     <div className={styles.coefficientLabel}>Коефіцієнт</div>
-                    <div className={styles.coefficientValue}>{result.coefficient}%</div>
+                    <div className={styles.coefficientValue}>{formatPercent(result.coefficient)}%</div>
                     <p className={styles.coefficientDescription}>
                         Оцінка за швидкість розв'язання
                     </p>
@@ -66,7 +67,9 @@ export function ResultPage() {
                         variant="secondary"
                         type="button"
                         size="large"
-                        onClick={() => {navigate(routes.startPath)}}
+                        onClick={() => {
+                            navigate(routes.startPath)
+                        }}
                     >
                         На головну
                     </Button>
@@ -75,7 +78,9 @@ export function ResultPage() {
                         variant="primary"
                         type="button"
                         size="large"
-                        onClick={() => {navigate(routes.gamePath)}}
+                        onClick={() => {
+                            navigate(routes.gamePath)
+                        }}
                     >
                         Грати ще раз
                     </Button>
