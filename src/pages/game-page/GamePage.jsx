@@ -1,33 +1,36 @@
-import styles from './GamePage.module.css';
-import {useCallback, useEffect, useRef, useState} from "react";
-import {GameStatsBar} from "@features/game-session";
-import {GameActions} from "@features/game-controls";
-import {WordInputField} from "@features/word-input";
-import {LetterTiles} from "@features/letter-selection";
-import {GameTimer} from "@features/timer";
-import {Button} from "@shared/ui";
-import {useWords} from "@features/words";
+import styles from "./GamePage.module.css";
+import { useCallback, useEffect, useRef } from "react";
+import { GameStatsBar } from "@features/game-session";
+import { GameActions } from "@features/game-controls";
+import { WordInputField } from "@features/word-input";
+import { LetterTiles } from "@features/letter-selection";
+import { GameTimer } from "@features/timer";
+import { Button } from "@shared/ui";
+import { useWords } from "@features/words";
 
 import {
     useGameRound,
     useGameStats,
     useHintLogic,
     useWordInput,
-    useGameControls
+    useGameControls,
 } from "@features/game-flow";
 
-import {checkWordCompletion} from "@shared/utils";
-import {useGameSettings} from "@features/game-settings";
-import {routes} from "@shared/config/routes.js";
-import {useNavigate} from "react-router";
-import {ResultSummaryModal} from "@features/game-result";
-import {usersStorage} from "@features/auth";
+import { checkWordCompletion } from "@shared/utils";
+import { useGameSettings } from "@features/game-settings";
+import { routes } from "@shared/config/routes.js";
+import { useNavigate } from "react-router";
+import { ResultSummaryModal } from "@features/game-result";
+import { usersStorage } from "@features/auth";
+import { useGameResultStore } from "@features/game-result/model/gameResult.store.js";
 
 export function GamePage() {
     const navigate = useNavigate();
-    const {settings} = useGameSettings();
-    const [showResults, setShowResults] = useState(false);
-    const [gameResult, setGameResult] = useState(null);
+    const { settings } = useGameSettings();
+
+    const lastResult = useGameResultStore((s) => s.lastResult);
+    const setLastResult = useGameResultStore((s) => s.setLastResult);
+    const clearLastResult = useGameResultStore((s) => s.clearLastResult);
 
     const timerRef = useRef(null);
     const timerStartedRef = useRef(false);
@@ -38,7 +41,7 @@ export function GamePage() {
         maxLength: [settings.maxWordLength],
     };
 
-    const {filteredWords, isLoading, error} = useWords(gameFilters);
+    const { filteredWords, isLoading, error } = useWords(gameFilters);
 
     const {
         score,
@@ -47,43 +50,46 @@ export function GamePage() {
         addScore,
         subtractScore,
         incrementWordsCompleted,
-        incrementWordsSkipped
+        incrementWordsSkipped,
+        resetStats,
     } = useGameStats();
 
     const {
         roundState,
         startNewRound,
-        updateRoundState
+        updateRoundState,
+        resetRound,
     } = useGameRound(filteredWords);
 
-    const {toggleHintMode, applyHintAtIndex, canUseHint, hintPenalty} = useHintLogic(
+    const { toggleHintMode, applyHintAtIndex, canUseHint, hintPenalty } = useHintLogic(
         roundState,
         updateRoundState,
         score,
         subtractScore
     );
 
-    const {handleSlotClick, handleCursorClick, handleLetterClick} = useWordInput(
+    const { handleSlotClick, handleCursorClick, handleLetterClick } = useWordInput(
         roundState,
         updateRoundState,
         applyHintAtIndex
     );
 
-    const handleGameEnd = useCallback(() => {
+    const buildResult = useCallback(() => {
         const totalTime = settings.timeSeconds ?? 60;
         const timeLeft = timerRef.current?.timeLeft ?? 0;
         const elapsedSeconds = Math.max(0, totalTime - timeLeft);
 
-        const coefficient = elapsedSeconds > 0 ? (score / elapsedSeconds * 60) : 0;
+        const coefficient = elapsedSeconds > 0 ? (score / elapsedSeconds) * 60 : 0;
 
-        const {isNewRecord} = usersStorage.updateStatsAfterSession({
+        const { isNewRecord } =
+        usersStorage.updateStatsAfterSession({
             successRate: coefficient,
             score,
             timeSeconds: elapsedSeconds,
             wordsSolved: wordsCompleted,
-        }) ?? {isNewRecord: false};
+        }) ?? { isNewRecord: false };
 
-        const result = {
+        return {
             timeSeconds: elapsedSeconds,
             score,
             wordsGuessed: wordsCompleted,
@@ -91,13 +97,17 @@ export function GamePage() {
             coefficient,
             isNewRecord,
         };
-
-        setGameResult(result);
-        setShowResults(true);
     }, [settings.timeSeconds, score, wordsCompleted, wordsSkipped]);
 
+    const handleGameEnd = useCallback(() => {
+        const result = buildResult();
 
-    const {handleShuffle, handleSkipWord, handleEndGame, skipPenalty} = useGameControls(
+        timerRef.current?.pause?.();
+
+        setLastResult(result);
+    }, [buildResult, setLastResult]);
+
+    const { handleShuffle, handleSkipWord, handleEndGame, skipPenalty } = useGameControls(
         roundState,
         updateRoundState,
         startNewRound,
@@ -118,9 +128,15 @@ export function GamePage() {
     }, [roundState, isLoading]);
 
     useEffect(() => {
+        if (!roundState) {
+            timerStartedRef.current = false;
+        }
+    }, [roundState]);
+
+    useEffect(() => {
         if (!roundState) return;
 
-        const {isComplete, isCorrect} = checkWordCompletion(
+        const { isComplete, isCorrect } = checkWordCompletion(
             roundState.currentWord,
             roundState.targetWord
         );
@@ -141,35 +157,43 @@ export function GamePage() {
         roundState?.currentWordScore,
         addScore,
         incrementWordsCompleted,
-        startNewRound
+        startNewRound,
+        roundState,
     ]);
 
     const handleTimeOver = useCallback(() => {
         handleGameEnd();
     }, [handleGameEnd]);
 
-    const handleLetterTileClick = useCallback((index) => {
-        if (roundState?.availableLetters?.[index]) {
-            handleLetterClick(roundState.availableLetters[index]);
-        }
-    }, [roundState, handleLetterClick]);
+    const handleLetterTileClick = useCallback(
+        (index) => {
+            if (roundState?.availableLetters?.[index]) {
+                handleLetterClick(roundState.availableLetters[index]);
+            }
+        },
+        [roundState, handleLetterClick]
+    );
 
-    //TODO replace by clearing state
-    const resetGame = () => {
-        navigate(0);
-    };
+    const resetGame = useCallback(() => {
+        clearLastResult();
+
+        timerRef.current?.reset?.();
+        timerStartedRef.current = false;
+
+        resetStats();
+        resetRound();
+    }, [clearLastResult, resetStats, resetRound]);
 
     const handleGoHome = () => {
+        resetGame();
         navigate(routes.startPath);
     };
 
     const handleGoToResults = () => {
-        navigate(routes.resultsPath, {state: gameResult});
-    }
+        navigate(routes.resultsPath);
+    };
 
     const handlePlayAgain = () => {
-        setShowResults(false);
-        setGameResult(null);
         resetGame();
     };
 
@@ -188,9 +212,7 @@ export function GamePage() {
             <div className={styles.root}>
                 <div className={styles.errorState}>
                     <p>Помилка завантаження: {error}</p>
-                    <Button onClick={resetGame}>
-                        Спробувати знову
-                    </Button>
+                    <Button onClick={resetGame}>Спробувати знову</Button>
                 </div>
             </div>
         );
@@ -206,24 +228,22 @@ export function GamePage() {
         );
     }
 
-    const {isWrong: isInvalid} = checkWordCompletion(
+    const { isWrong: isInvalid } = checkWordCompletion(
         roundState.currentWord,
         roundState.targetWord
     );
 
-    const currentWordChars = roundState.currentWord.map(letter => letter?.char || '');
-    const availableLetterChars = roundState.availableLetters.map(letter => letter.char);
+    const currentWordChars = roundState.currentWord.map((letter) => letter?.char || "");
+    const availableLetterChars = roundState.availableLetters.map((letter) => letter.char);
 
     const actualUsedLetterIds = new Set();
-    roundState.currentWord.forEach(letter => {
-        if (letter) {
-            actualUsedLetterIds.add(letter.id);
-        }
+    roundState.currentWord.forEach((letter) => {
+        if (letter) actualUsedLetterIds.add(letter.id);
     });
 
     const disabledIndices = roundState.availableLetters
-        .map((letter, index) => actualUsedLetterIds.has(letter.id) ? index : -1)
-        .filter(index => index !== -1);
+        .map((letter, index) => (actualUsedLetterIds.has(letter.id) ? index : -1))
+        .filter((index) => index !== -1);
 
     return (
         <div className={styles.root}>
@@ -278,29 +298,21 @@ export function GamePage() {
                 />
 
                 <div className={styles.footer}>
-                    <Button
-                        variant="secondary"
-                        onClick={handleSkipWord}
-                        size={'large'}
-                    >
+                    <Button variant="secondary" onClick={handleSkipWord} size={"large"}>
                         Пропустити слово (-{skipPenalty})
                     </Button>
 
-                    <Button
-                        variant="danger"
-                        onClick={handleEndGame}
-                        size={'large'}
-                    >
+                    <Button variant="danger" onClick={handleEndGame} size={"large"}>
                         Завершити гру
                     </Button>
                 </div>
             </div>
 
             <ResultSummaryModal
-                isOpen={showResults}
+                isOpen={Boolean(lastResult)}
                 onClose={handleGoHome}
-                successRate={gameResult?.coefficient}
-                isNewRecord={gameResult?.isNewRecord}
+                successRate={lastResult?.coefficient}
+                isNewRecord={lastResult?.isNewRecord}
                 onViewDetails={handleGoToResults}
                 onGoHome={handleGoHome}
                 onTryAgain={handlePlayAgain}
