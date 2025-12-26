@@ -1,13 +1,11 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
-import { getRandomWord } from '@features/words/index.js';
-import {calculateInitialWordScore, shuffleArray, wordToLetters} from "@shared/utils/index.js";
+import { useCallback, useEffect } from "react";
+import { getRandomWord } from "@features/words/index.js";
+import { calculateInitialWordScore, shuffleArray, wordToLetters } from "@shared/utils/index.js";
+import {useGameRoundStore} from "@features/game-flow/model/gameRound.store.js";
 
 function createInitialRoundState(availableWords) {
     const wordData = getRandomWord(availableWords);
-
-    if (!wordData) {
-        return null;
-    }
+    if (!wordData) return null;
 
     const word = wordData.word.toUpperCase();
     const letters = wordToLetters(word);
@@ -23,49 +21,37 @@ function createInitialRoundState(availableWords) {
         hintMode: false,
         hintCount: 0,
         currentWordScore: calculateInitialWordScore(word),
-        removalCount: 0
+        removalCount: 0,
     };
 }
 
 export function useGameRound(availableWords) {
-    const initializedRef = useRef(false);
-    const [roundState, setRoundState] = useState(null);
+    const roundState = useGameRoundStore((s) => s.roundState);
+    const needsInit = useGameRoundStore((s) => s.needsInit);
+    const setRoundState = useGameRoundStore((s) => s.setRoundState);
+    const updateRoundState = useGameRoundStore((s) => s.updateRoundState);
+    const resetRound = useGameRoundStore((s) => s.resetRound);
 
     useEffect(() => {
-        if (availableWords && availableWords.length > 0 && !initializedRef.current) {
-            initializedRef.current = true;
-            const initialState = createInitialRoundState(availableWords);
-            setRoundState(initialState);
-        }
-    }, [availableWords]);
+        if (!needsInit) return;
+        if (!availableWords || availableWords.length === 0) return;
+
+        const initial = createInitialRoundState(availableWords);
+        setRoundState(initial);
+    }, [needsInit, availableWords, setRoundState]);
 
     const startNewRound = useCallback(() => {
-        if (!availableWords || availableWords.length === 0) {
-            return null;
-        }
+        if (!availableWords || availableWords.length === 0) return null;
 
         const newState = createInitialRoundState(availableWords);
-        if (newState) {
-            setRoundState(newState);
-        }
+        setRoundState(newState);
         return newState;
-    }, [availableWords]);
-
-    const updateRoundState = useCallback((updates) => {
-        setRoundState(prev => {
-            if (!prev) return prev;
-
-            const newUpdates = typeof updates === 'function'
-                ? updates(prev)
-                : updates;
-
-            return { ...prev, ...newUpdates };
-        });
-    }, []);
+    }, [availableWords, setRoundState]);
 
     return {
         roundState,
         startNewRound,
-        updateRoundState
+        updateRoundState,
+        resetRound,
     };
 }

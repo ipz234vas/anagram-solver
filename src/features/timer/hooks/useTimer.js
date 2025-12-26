@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 export function useTimer({ duration, onTimeOver, autoStart = false }) {
     const [timeLeft, setTimeLeft] = useState(duration);
@@ -6,15 +6,10 @@ export function useTimer({ duration, onTimeOver, autoStart = false }) {
 
     const intervalRef = useRef(null);
     const onTimeOverRef = useRef(onTimeOver);
-    const timeLeftRef = useRef(timeLeft);
 
     useEffect(() => {
         onTimeOverRef.current = onTimeOver;
     }, [onTimeOver]);
-
-    useEffect(() => {
-        timeLeftRef.current = timeLeft;
-    }, [timeLeft]);
 
     useEffect(() => {
         if (!isRunning) {
@@ -25,19 +20,8 @@ export function useTimer({ duration, onTimeOver, autoStart = false }) {
             return;
         }
 
-        if (timeLeft <= 0) {
-            return;
-        }
-
         intervalRef.current = setInterval(() => {
-            setTimeLeft(prev => {
-                if (prev <= 1) {
-                    setIsRunning(false);
-                    onTimeOverRef.current?.();
-                    return 0;
-                }
-                return prev - 1;
-            });
+            setTimeLeft((prev) => Math.max(0, prev - 1));
         }, 1000);
 
         return () => {
@@ -46,21 +30,27 @@ export function useTimer({ duration, onTimeOver, autoStart = false }) {
                 intervalRef.current = null;
             }
         };
-    }, [isRunning, timeLeft]);
+    }, [isRunning]);
+
+    useEffect(() => {
+        if (!isRunning)
+            return;
+        if (timeLeft !== 0)
+            return;
+
+        setIsRunning(false);
+        onTimeOverRef.current?.();
+    }, [timeLeft, isRunning]);
 
     const start = () => {
         setTimeLeft(duration);
         setIsRunning(true);
     };
 
-    const pause = () => {
-        setIsRunning(false);
-    };
+    const pause = () => setIsRunning(false);
 
     const resume = () => {
-        if (timeLeftRef.current > 0) {
-            setIsRunning(true);
-        }
+        if (timeLeft > 0) setIsRunning(true);
     };
 
     const reset = () => {
@@ -80,6 +70,6 @@ export function useTimer({ duration, onTimeOver, autoStart = false }) {
         pause,
         resume,
         reset,
-        stop
+        stop,
     };
 }
