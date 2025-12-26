@@ -4,6 +4,7 @@ import {AppLayout} from "@app/layout/AppLayout.jsx";
 import {StartPage} from "@pages/start-page/StartPage.jsx";
 import {GamePage} from "@pages/game-page/GamePage.jsx";
 import {ResultPage} from "@pages/result-page/ResultPage.jsx";
+import {PageNotFound} from "@pages/not-found/PageNotFound.jsx";
 
 const navLinks = [
     {to: routes.startPath, label: "Головна", end: true},
@@ -31,7 +32,7 @@ const AppRouter = () => {
                 <Route path={routes.userPath} element={<div>TODO: Profile</div>}/>
                 <Route path={routes.leaderboardPath} element={<div>TODO: Leaderboard</div>}/>
 
-                <Route path="*" element={<div>TODO: Not Found</div>}/>
+                <Route path="*" element={<PageNotFound/>}/>
             </Route>
         </Routes>
     );
