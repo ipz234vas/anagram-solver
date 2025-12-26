@@ -21,6 +21,7 @@ import {useGameSettings} from "@features/game-settings/index.js";
 import {routes} from "@shared/config/routes.js";
 import {useNavigate} from "react-router";
 import {ResultSummaryModal} from "@features/game-result";
+import { usersStorage } from "@features/auth";
 
 export function GamePage() {
     const navigate = useNavigate();
@@ -73,18 +74,28 @@ export function GamePage() {
         const timeLeft = timerRef.current?.timeLeft ?? 0;
         const elapsedSeconds = Math.max(0, totalTime - timeLeft);
 
+        const coefficient = elapsedSeconds > 0 ? (score / elapsedSeconds * 60) : 0;
+
+        const { isNewRecord } = usersStorage.updateStatsAfterSession({
+            successRate: coefficient,
+            score,
+            timeSeconds: elapsedSeconds,
+            wordsSolved: wordsCompleted,
+        }) ?? { isNewRecord: false };
+
         const result = {
             timeSeconds: elapsedSeconds,
-            score: score,
+            score,
             wordsGuessed: wordsCompleted,
-            wordsSkipped: wordsSkipped,
-            coefficient: elapsedSeconds > 0 ? (score / elapsedSeconds * 60) : 0,
-            isNewRecord: true //TODO fill this prop
+            wordsSkipped,
+            coefficient,
+            isNewRecord,
         };
 
         setGameResult(result);
         setShowResults(true);
     }, [settings.timeSeconds, score, wordsCompleted, wordsSkipped]);
+
 
     const {handleShuffle, handleSkipWord, handleEndGame, skipPenalty} = useGameControls(
         roundState,
