@@ -51,9 +51,15 @@ export function GamePage() {
         subtractScore,
         incrementWordsCompleted,
         incrementWordsSkipped,
+        resetStats,
     } = useGameStats();
 
-    const { roundState, startNewRound, updateRoundState } = useGameRound(filteredWords);
+    const {
+        roundState,
+        startNewRound,
+        updateRoundState,
+        resetRound,
+    } = useGameRound(filteredWords);
 
     const { toggleHintMode, applyHintAtIndex, canUseHint, hintPenalty } = useHintLogic(
         roundState,
@@ -96,6 +102,8 @@ export function GamePage() {
     const handleGameEnd = useCallback(() => {
         const result = buildResult();
 
+        timerRef.current?.pause?.();
+
         setLastResult(result);
     }, [buildResult, setLastResult]);
 
@@ -118,6 +126,12 @@ export function GamePage() {
             return () => clearTimeout(timer);
         }
     }, [roundState, isLoading]);
+
+    useEffect(() => {
+        if (!roundState) {
+            timerStartedRef.current = false;
+        }
+    }, [roundState]);
 
     useEffect(() => {
         if (!roundState) return;
@@ -160,13 +174,18 @@ export function GamePage() {
         [roundState, handleLetterClick]
     );
 
-    // TODO replace by clearing state (поки лишаємо як є)
-    const resetGame = () => {
-        navigate(0);
-    };
+    const resetGame = useCallback(() => {
+        clearLastResult();
+
+        timerRef.current?.reset?.();
+        timerStartedRef.current = false;
+
+        resetStats();
+        resetRound();
+    }, [clearLastResult, resetStats, resetRound]);
 
     const handleGoHome = () => {
-        clearLastResult();
+        resetGame();
         navigate(routes.startPath);
     };
 
@@ -175,7 +194,6 @@ export function GamePage() {
     };
 
     const handlePlayAgain = () => {
-        clearLastResult();
         resetGame();
     };
 
