@@ -14,7 +14,7 @@ A dynamic, web-based puzzle game where players unscramble letters to find the hi
 - [Available Commands](#available-commands)
 - [Documentation & UI](#documentation--ui)
 - [Legal & Privacy](#legal--privacy)
-- [License](#license)
+- [License](#license--author)
 
 ## About the Game
 Anagram Solver is a fast-paced word puzzle designed to test your vocabulary and quick thinking. Players can create personal profiles, compete against the clock, and track their high scores on the local leaderboard.
