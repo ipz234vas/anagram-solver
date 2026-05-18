@@ -349,8 +349,8 @@
 │  ├─ path: /home/andrii/Projects/anagram-solver/node_modules/ajv
 │  └─ licenseFile: /home/andrii/Projects/anagram-solver/node_modules/ajv/LICENSE
 ├─ anagram-solver@0.0.0
-│  ├─ licenses: UNLICENSED
-│  ├─ private: true
+│  ├─ licenses: Apache-2.0
+│  ├─ publisher: Andrii Volynets
 │  ├─ path: /home/andrii/Projects/anagram-solver
 │  └─ licenseFile: /home/andrii/Projects/anagram-solver/README.md
 ├─ ansi-styles@3.2.1

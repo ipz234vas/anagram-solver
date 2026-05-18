@@ -55,7 +55,7 @@
 [acorn-jsx@5.3.2](https://github.com/acornjs/acorn-jsx) - MIT
 [acorn@8.16.0](https://github.com/acornjs/acorn) - MIT
 [ajv@6.14.0](https://github.com/ajv-validator/ajv) - MIT
-[anagram-solver@0.0.0](undefined) - UNLICENSED
+[anagram-solver@0.0.0](undefined) - Apache-2.0
 [ansi-styles@3.2.1](https://github.com/chalk/ansi-styles) - MIT
 [ansi-styles@4.3.0](https://github.com/chalk/ansi-styles) - MIT
 [argparse@2.0.1](https://github.com/nodeca/argparse) - Python-2.0
