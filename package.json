@@ -9,7 +9,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docs": "npm run start --prefix documentation",
+    "docs:build": "npm run build --prefix documentation"
   },
   "dependencies": {
     "license-checker": "^25.0.1",

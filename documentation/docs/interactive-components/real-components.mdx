@@ -1,0 +1,83 @@
+# Live UI Components
+
+One of Docusaurus' greatest advantages is its native **MDX (Markdown + JSX)** integration. We don't just write static text about our code — we import and render our **actual, production-ready React components** directly inside this documentation page!
+
+Because we integrated our Feature-Sliced Design paths into the Docusaurus Webpack compiler bundler, these components use the exact same styles and business logic files as the running game.
+
+import { Button } from '../../../src/shared/ui/button/Button.jsx';
+import { Card } from '../../../src/shared/ui/card/Card.jsx';
+import { Modal } from '../../../src/shared/ui/modal/Modal.jsx';
+import { useState } from 'react';
+
+## 1. Shared Button Component
+
+The standard interactive controller of the application. It maps class structures dynamically via our shared `cn` compiling utility.
+
+### Component Demonstration
+Click the buttons below to test their default interactive behaviors and hover states right inside this documentation page:
+
+<div style={{ display: 'flex', gap: '12px', padding: '24px', background: 'var(--ifm-background-surface-color)', borderRadius: 'var(--ifm-global-radius)', border: '1px solid var(--ifm-color-emphasis-300)', marginBottom: '20px' }}>
+  <Button variant="primary" onClick={() => alert('Primary Trigger Executed!')}>Primary Action</Button>
+  <Button variant="secondary" onClick={() => alert('Secondary Trigger Executed!')}>Secondary View</Button>
+</div>
+
+### Code Specifications
+```jsx title="src/shared/ui/button/Button.jsx"
+import cn from '../../lib/cn.js';
+import styles from './Button.module.css';
+
+export function Button({ variant = 'primary', className, children, ...props }) {
+    return (
+        <button className={cn(styles.btn, styles[variant], className)} {...props}>
+            {children}
+        </button>
+    );
+}
+```
+
+---
+
+## 2. Shared Card Component
+
+Used across page views (such as the Leaderboard matrix and the Login gateway) to present text layout components cleanly.
+
+### Component Demonstration
+<div style={{ padding: '24px', background: 'var(--ifm-background-surface-color)', borderRadius: 'var(--ifm-global-radius)', border: '1px solid var(--ifm-color-emphasis-300)', marginBottom: '20px' }}>
+  <Card style={{ maxWidth: '400px', margin: '0 auto' }}>
+    <h3 style={{ marginTop: 0 }}>🏆 Session High Score</h3>
+    <p style={{ margin: 0, color: 'var(--ifm-color-emphasis-700)' }}>Player: Andrii Volynets</p>
+    <p style={{ fontSize: '24px', fontWeight: '800', margin: '10px 0 0 0' }}>1,450 pts</p>
+  </Card>
+</div>
+
+---
+
+## 3. Live Modal Portal Framework
+
+Our `<Modal>` component relies on **React Portals** (`createPortal`) to detach itself from local DOM layers and mount directly onto `document.body`. This prevents parents from truncating modal layers via `overflow: hidden` properties.
+
+### Component Demonstration
+Click the controller button below to toggle a real, fully-functional instance of your custom `<Modal>` component:
+
+export const ModalTrigger = () => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ textAlign: 'center', padding: '20px' }}>
+      <Button variant="primary" onClick={() => setOpen(true)}>Launch Real Modal Portal 🚀</Button>
+      <Modal isOpen={open} onClose={() => setOpen(false)} title="Interactive Documentation Portal" showCloseButton={true} hasBackdropBlur={true}>
+        <p>Amazing! This is the exact modal framework from your game running natively inside Docusaurus markdown pages!</p>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+          <Button variant="secondary" onClick={() => setOpen(false)}>Close Portal</Button>
+        </div>
+      </Modal>
+    </div>
+  );
+};
+
+<div style={{ background: 'var(--ifm-background-surface-color)', borderRadius: 'var(--ifm-global-radius)', border: '1px solid var(--ifm-color-emphasis-300)' }}>
+  <ModalTrigger />
+</div>
+
+:::tip Production Integration
+Because Docusaurus imports these components directly, any visual improvements, theme switches, or adjustments made within your game source folder will instantly reflect on this documentation site.
+:::

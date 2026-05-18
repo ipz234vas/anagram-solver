@@ -86,6 +86,6 @@ export const sessionStorageWrapper = {
 
     remove(key) {
         sessionMemoryStorage.delete(key);
-        try { sessionStorage.removeItem(key); } catch { }
+        try { sessionStorage.removeItem(key); } catch { /* empty */ }
     },
 };
