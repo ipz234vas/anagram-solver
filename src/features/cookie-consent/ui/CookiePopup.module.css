@@ -1,0 +1,68 @@
+.text {
+    margin: 0 0 20px 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--muted-500, #555555);
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+}
+
+.actions button {
+    flex: 1;
+    min-width: 120px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: calc(var(--radius, 8px) / 1.5);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: var(--surface2-500, #f1f5f9);
+    color: var(--neutral-500, #334155);
+}
+
+.actions button:hover {
+    background-color: var(--border-500, #e2e8f0);
+}
+
+.manageContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.option input[type="checkbox"] {
+    margin-top: 4px;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--neutral-500, #334155);
+}
+
+.option div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.option strong {
+    font-size: 0.95rem;
+    color: var(--neutral-500, #1e293b);
+}
+
+.option span {
+    font-size: 0.85rem;
+    color: var(--muted-500, #64748b);
+    line-height: 1.4;
+}

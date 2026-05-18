@@ -73,7 +73,6 @@ This application complies with standard privacy requirements. All necessary lega
 | Document | File Link |
 |----------|-----------|
 | **Privacy Policy** | [PRIVACY_POLICY.md](./PRIVACY_POLICY.md) |
-| **EULA** | [EULA.md](./EULA.md) |
 | **Dependencies Licenses** | [licenses-summary.txt](./licenses-summary.txt) |
 
 ## License & Author
