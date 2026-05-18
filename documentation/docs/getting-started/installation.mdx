@@ -1,0 +1,54 @@
+# Installation & Setup
+
+This guide will help you boot up the Anagram Solver locally.
+
+## Prerequisites
+Ensure you have **Node.js (v18+)** installed on your system.
+
+## Running the Project
+
+Choose your preferred package manager below. We have configured the project to work seamlessly across different environments.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="npm" label="npm" default>
+    ```bash
+    # 1. Install dependencies
+    npm install
+
+    # 2. Start the Vite development server
+    npm run dev
+    ```
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+    ```bash
+    # 1. Install dependencies
+    yarn install
+
+    # 2. Start the Vite development server
+    yarn dev
+    ```
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+    ```bash
+    # 1. Install dependencies
+    pnpm install
+
+    # 2. Start the Vite development server
+    pnpm dev
+    ```
+  </TabItem>
+</Tabs>
+
+## Available Scripts
+
+Our `package.json` includes several utility scripts for development and documentation:
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Starts the main game client on `localhost:5173`. |
+| `npm run build` | Compiles the game into the `dist` folder for production. |
+| `npm run lint` | Runs ESLint rules across the `src` directory. |
+| `npm run docs` | Boots up this Docusaurus documentation server. |

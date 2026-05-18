@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { persist } from "zustand/middleware";
+import { storage } from "@shared/storage/storage.js";
 
 export const WORD_LENGTH_CONSTRAINTS = { MIN: 4, MAX: 8 };
 export const TIME_CONSTRAINTS = { MIN: 30, MAX: 300 };
@@ -12,6 +13,12 @@ export const DEFAULT_SETTINGS = {
 };
 
 const STORAGE_KEY = "anagram:settings";
+
+const zustandGdprStorage = {
+    getItem: (name) => storage.get(name),
+    setItem: (name, value) => storage.set(name, value),
+    removeItem: (name) => storage.remove(name),
+};
 
 export const useGameSettingsStore = create()(
     persist(
@@ -30,21 +37,15 @@ export const useGameSettingsStore = create()(
             isValid: () => {
                 const s = get().settings;
                 return Boolean(
-                    s.minWordLength &&
-                    s.maxWordLength &&
-                    s.timeSeconds &&
-                    s.category
+                    s.minWordLength && s.maxWordLength && s.timeSeconds && s.category
                 );
             },
         }),
         {
             name: STORAGE_KEY,
-            storage: createJSONStorage(() => localStorage),
-
+            storage: zustandGdprStorage,
             partialize: (state) => ({ settings: state.settings }),
-
             version: 1,
-
             merge: (persistedState, currentState) => {
                 const persistedSettings = persistedState?.settings ?? {};
                 return {
